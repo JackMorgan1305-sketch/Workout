@@ -1,0 +1,1092 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#0a0c0f">
+<title>Training Programme</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+html { background:#0a0c0f; color-scheme:dark; }
+body { background:#0a0c0f !important; color:#eef2f6 !important; font-family:'DM Sans','Helvetica Neue',Arial,sans-serif; min-height:100vh; overscroll-behavior:none; -webkit-text-size-adjust:100%; }
+@media (prefers-color-scheme:light) { html,body { background:#0a0c0f !important; color:#eef2f6 !important; } }
+.topbar { position:sticky; top:0; z-index:100; background:#0a0c0f; border-bottom:1px solid #222a32; padding:10px 16px 0; }
+.topbar-title { font-family:'Bebas Neue','Impact',sans-serif; font-size:22px; letter-spacing:1px; line-height:1; color:#eef2f6; }
+.topbar-title em { color:#e03535; font-style:normal; }
+.topbar-sub { font-family:'DM Mono','Menlo',monospace; font-size:9px; color:#3d4852; letter-spacing:2px; text-transform:uppercase; padding-bottom:10px; }
+.tabs { display:flex; overflow-x:auto; background:#0a0c0f; border-bottom:1px solid #222a32; scrollbar-width:none; }
+.tabs::-webkit-scrollbar { display:none; }
+.tab { flex-shrink:0; padding:10px 14px; font-family:'DM Mono','Menlo',monospace; font-size:9px; letter-spacing:2px; text-transform:uppercase; color:#6b7a8d; cursor:pointer; border-bottom:2px solid transparent; transition:all 0.15s; user-select:none; }
+.tab.active { color:#e03535; border-bottom-color:#e03535; }
+.panel { display:none; padding:12px 12px 100px; background:#0a0c0f; }
+.panel.active { display:block; }
+.day-header { border-radius:10px; padding:14px 16px; margin-bottom:12px; position:relative; overflow:hidden; }
+.day-header::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; }
+.day-header.upper { background:rgba(224,53,53,0.1); border:1px solid rgba(224,53,53,0.25); }
+.day-header.upper::before { background:#e03535; }
+.day-header.lower { background:rgba(34,197,94,0.1); border:1px solid rgba(34,197,94,0.25); }
+.day-header.lower::before { background:#22c55e; }
+.day-header.push { background:rgba(245,158,11,0.1); border:1px solid rgba(245,158,11,0.25); }
+.day-header.push::before { background:#f59e0b; }
+.day-header.pull { background:rgba(168,85,247,0.1); border:1px solid rgba(168,85,247,0.25); }
+.day-header.pull::before { background:#a855f7; }
+.dh-day { font-family:'DM Mono','Menlo',monospace; font-size:9px; letter-spacing:3px; text-transform:uppercase; color:#6b7a8d; margin-bottom:4px; }
+.dh-title { font-family:'Bebas Neue','Impact',sans-serif; font-size:26px; color:#eef2f6; margin-bottom:4px; }
+.dh-desc { font-size:12px; color:#aaaaaa; line-height:1.6; }
+.pills { display:flex; gap:6px; overflow-x:auto; scrollbar-width:none; padding-bottom:12px; }
+.pills::-webkit-scrollbar { display:none; }
+.pill { flex-shrink:0; background:#12161a; border:1px solid #222a32; border-radius:8px; padding:8px 12px; text-align:center; }
+.pill-val { font-family:'Bebas Neue','Impact',sans-serif; font-size:20px; color:#e03535; line-height:1; }
+.pill-label { font-family:'DM Mono','Menlo',monospace; font-size:8px; color:#6b7a8d; letter-spacing:1px; text-transform:uppercase; margin-top:2px; }
+.phase-head { display:flex; align-items:center; gap:10px; margin:16px 0 8px; }
+.phase-icon { width:30px; height:30px; border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:14px; flex-shrink:0; background:rgba(59,130,246,0.15); border:1px solid rgba(59,130,246,0.3); }
+.phase-label { font-family:'Bebas Neue','Impact',sans-serif; font-size:17px; flex:1; color:#eef2f6; }
+.phase-sub { font-family:'DM Mono','Menlo',monospace; font-size:8px; color:#6b7a8d; letter-spacing:2px; text-transform:uppercase; }
+.phase-info { font-family:'DM Mono','Menlo',monospace; font-size:10px; color:#e03535; }
+.warmup-note { background:rgba(34,197,94,0.08); border:1px solid rgba(34,197,94,0.2); border-radius:10px; padding:12px 14px; margin-bottom:12px; }
+.warmup-note-title { font-family:'DM Mono','Menlo',monospace; font-size:9px; letter-spacing:3px; text-transform:uppercase; color:#22c55e; margin-bottom:5px; }
+.warmup-note p { font-size:12px; color:#aaaaaa; line-height:1.6; }
+.prog-note { background:#1a2028; border-radius:8px; padding:10px 14px; margin-bottom:12px; }
+.prog-note-title { font-family:'DM Mono','Menlo',monospace; font-size:9px; letter-spacing:3px; text-transform:uppercase; color:#e03535; margin-bottom:5px; }
+.prog-note p { font-size:12px; color:#aaaaaa; line-height:1.6; }
+.excard { background:#12161a; border:1px solid #222a32; border-radius:10px; margin-bottom:8px; overflow:hidden; }
+.excard.glute-card { border-color:rgba(34,197,94,0.35); }
+.excard.new-card { border-color:rgba(245,158,11,0.35); }
+.excard.abs-card { border-color:rgba(59,130,246,0.35); }
+.excard-header { display:flex; align-items:center; gap:12px; padding:13px 14px; cursor:pointer; user-select:none; -webkit-user-select:none; background:#12161a; }
+.excard-header:active { background:#1a2028; }
+.ex-num { width:32px; height:32px; border-radius:8px; display:flex; align-items:center; justify-content:center; font-family:'DM Mono','Menlo',monospace; font-size:11px; flex-shrink:0; font-weight:500; }
+.ex-num.str { background:rgba(224,53,53,0.15); color:#e03535; }
+.ex-num.hype { background:rgba(245,158,11,0.15); color:#f59e0b; }
+.ex-num.glut { background:rgba(34,197,94,0.15); color:#22c55e; }
+.ex-num.ab { background:rgba(59,130,246,0.15); color:#3b82f6; }
+.ex-main { flex:1; min-width:0; }
+.ex-name { font-weight:700; font-size:15px; line-height:1.2; color:#eef2f6; }
+.ex-tags { display:flex; flex-wrap:wrap; gap:4px; margin-top:4px; }
+.ex-tag { font-family:'DM Mono','Menlo',monospace; font-size:8px; letter-spacing:1px; padding:2px 7px; border-radius:4px; }
+.ex-tag.load { background:rgba(224,53,53,0.15); color:#e03535; }
+.ex-tag.sets, .ex-tag.reps { background:#1a2028; color:#6b7a8d; border:1px solid #222a32; }
+.ex-tag.glute { background:rgba(34,197,94,0.12); color:#22c55e; }
+.ex-tag.new { background:rgba(245,158,11,0.12); color:#f59e0b; }
+.ex-tag.abs { background:rgba(59,130,246,0.12); color:#3b82f6; }
+.ex-chevron { font-size:16px; color:#6b7a8d; flex-shrink:0; transition:transform 0.2s; }
+.excard.open .ex-chevron { transform:rotate(180deg); }
+.excard-body { display:none; border-top:1px solid #222a32; padding:14px; background:#12161a; }
+.excard.open .excard-body { display:block; }
+.rx-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:4px; margin-bottom:14px; }
+.rx-box { background:#1a2028; border-radius:6px; padding:8px; text-align:center; }
+.rx-val { font-family:'Bebas Neue','Impact',sans-serif; font-size:20px; color:#e03535; line-height:1; }
+.rx-label { font-family:'DM Mono','Menlo',monospace; font-size:7px; color:#6b7a8d; letter-spacing:2px; text-transform:uppercase; margin-top:2px; }
+.tempo-box { background:rgba(224,53,53,0.06); border:1px solid rgba(224,53,53,0.15); border-radius:6px; padding:10px 12px; margin-bottom:12px; }
+.tempo-row { display:flex; }
+.tempo-digit { flex:1; text-align:center; }
+.tempo-num { font-family:'Bebas Neue','Impact',sans-serif; font-size:28px; color:#e03535; line-height:1; }
+.tempo-sep { font-family:'Bebas Neue','Impact',sans-serif; font-size:28px; color:#3d4852; align-self:center; }
+.tempo-l { font-family:'DM Mono','Menlo',monospace; font-size:7px; color:#6b7a8d; letter-spacing:1px; text-transform:uppercase; margin-top:2px; }
+.cue-label { font-family:'DM Mono','Menlo',monospace; font-size:8px; letter-spacing:3px; text-transform:uppercase; color:#6b7a8d; margin:12px 0 6px; padding-bottom:4px; border-bottom:1px solid #222a32; }
+.key-cue { background:rgba(224,53,53,0.08); border-left:2px solid #e03535; border-radius:4px; padding:8px 12px; margin-bottom:10px; font-size:13px; color:#fca5a5; line-height:1.6; }
+.cue-item { font-size:13px; line-height:1.6; color:#cccccc; padding:5px 0 5px 16px; position:relative; border-bottom:1px solid rgba(255,255,255,0.04); }
+.cue-item:last-child { border-bottom:none; }
+.cue-item::before { content:'—'; position:absolute; left:0; color:#6b7a8d; font-family:'DM Mono','Menlo',monospace; font-size:10px; }
+.cue-item strong { color:#eef2f6; }
+.error-item { font-size:13px; line-height:1.5; color:#cccccc; padding:5px 0 5px 22px; position:relative; border-bottom:1px solid rgba(255,255,255,0.04); }
+.error-item:last-child { border-bottom:none; }
+.error-item::before { content:'✗'; position:absolute; left:0; color:#f59e0b; font-weight:700; font-size:11px; top:7px; }
+.feel-box { background:rgba(59,130,246,0.08); border:1px solid rgba(59,130,246,0.2); border-radius:6px; padding:10px 12px; font-size:12px; color:#93c5fd; line-height:1.6; font-style:italic; margin-top:4px; }
+.muscle-row { display:flex; flex-wrap:wrap; gap:5px; margin-top:10px; }
+.mtag { font-family:'DM Mono','Menlo',monospace; font-size:9px; padding:3px 8px; border-radius:4px; letter-spacing:1px; }
+.mtag.primary { background:#e03535; color:#fff; font-weight:500; }
+.mtag.secondary { background:#1a2028; color:#6b7a8d; border:1px solid #222a32; }
+.rest-btn { display:flex; align-items:center; gap:8px; background:#1a2028; border:1px solid #222a32; border-radius:8px; padding:10px 14px; margin-top:12px; cursor:pointer; width:100%; }
+.rest-btn:active { opacity:0.8; }
+.rest-btn-icon { font-size:18px; }
+.rest-btn-text { flex:1; }
+.rest-btn-label { font-family:'DM Mono','Menlo',monospace; font-size:9px; color:#6b7a8d; letter-spacing:2px; text-transform:uppercase; }
+.rest-btn-time { font-family:'Bebas Neue','Impact',sans-serif; font-size:22px; color:#f59e0b; line-height:1; }
+.rest-btn-arrow { font-size:16px; color:#6b7a8d; }
+.to { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.96); z-index:200; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:32px; }
+.to.active { display:flex; }
+.to-name { font-family:'DM Mono','Menlo',monospace; font-size:9px; color:#6b7a8d; letter-spacing:3px; text-transform:uppercase; margin-bottom:12px; }
+.to-display { font-family:'Bebas Neue','Impact',sans-serif; font-size:110px; line-height:1; letter-spacing:2px; margin-bottom:6px; color:#f59e0b; }
+.to-display.urgent { color:#e03535; }
+.to-display.done { color:#22c55e; }
+.to-sub { font-family:'DM Mono','Menlo',monospace; font-size:10px; color:#6b7a8d; letter-spacing:2px; margin-bottom:40px; }
+.to-bar { width:220px; height:5px; background:#222a32; border-radius:3px; margin-bottom:40px; overflow:hidden; }
+.to-fill { height:100%; border-radius:3px; transition:width 1s linear; background:#f59e0b; }
+.to-controls { display:flex; gap:12px; }
+.to-btn { padding:14px 28px; border:none; border-radius:10px; font-family:'DM Mono','Menlo',monospace; font-size:11px; letter-spacing:2px; text-transform:uppercase; cursor:pointer; font-weight:500; }
+.to-btn.close { background:#1a2028; color:#6b7a8d; }
+.to-btn.pause { background:#f59e0b; color:#000; }
+.to-btn.paused { background:#3b82f6; color:#fff; }
+</style>
+</head>
+<body>
+
+<div class="to" id="timerOverlay">
+  <div class="to-name" id="toName">REST</div>
+  <div class="to-display" id="toDisplay">3:00</div>
+  <div class="to-sub" id="toSub">Rest and recover</div>
+  <div class="to-bar"><div class="to-fill" id="toFill" style="width:100%"></div></div>
+  <div class="to-controls">
+    <button class="to-btn close" onclick="stopTimer()">✕ Close</button>
+    <button class="to-btn pause" id="toPauseBtn" onclick="pauseTimer()">⏸ Pause</button>
+  </div>
+</div>
+
+<div class="topbar">
+  <div class="topbar-title">TRAINING <em>PROGRAMME</em></div>
+  <div class="topbar-sub">Tap exercise to expand · Rest timers built in</div>
+</div>
+
+<div class="tabs">
+  <div class="tab active" onclick="showPanel('mon',this)">MON</div>
+  <div class="tab" onclick="showPanel('tue',this)">TUE</div>
+  <div class="tab" onclick="showPanel('wed',this)">WED</div>
+  <div class="tab" onclick="showPanel('thu',this)">THU</div>
+  <div class="tab" onclick="showPanel('fri',this)">FRI</div>
+</div>
+
+<!-- MONDAY -->
+
+<div class="panel active" id="panel-mon">
+  <div class="day-header upper">
+    <div class="dh-day">Day 01 · Monday</div>
+    <div class="dh-title">UPPER BODY — STRENGTH</div>
+    <div class="dh-desc">Heavy push and pull. 4–6 reps. Weight should feel genuinely hard by rep 4. Take every rest period in full.</div>
+  </div>
+  <div class="pills">
+    <div class="pill"><div class="pill-val">20</div><div class="pill-label">Working Sets</div></div>
+    <div class="pill"><div class="pill-val">55</div><div class="pill-label">Minutes</div></div>
+    <div class="pill"><div class="pill-val">4–6</div><div class="pill-label">Rep Range</div></div>
+    <div class="pill"><div class="pill-val">RPE 8</div><div class="pill-label">Intensity</div></div>
+  </div>
+  <div class="warmup-note"><div class="warmup-note-title">⚡ Before You Start</div><p>5 min bike → arm circles → scapular wall slides → band pull-aparts 2×15. Warm-up sets on chest press: 40% (≈16kg) ×10, then 65% (≈27kg) ×6.</p></div>
+  <div class="prog-note"><div class="prog-note-title">📈 Progression Rule</div><p>Complete all sets at the TOP of the rep range at RPE ≤8 → add 2.5kg upper / 5kg lower next session.</p></div>
+
+  <div class="excard" onclick="toggle(this)">
+    <div class="excard-header"><div class="ex-num str">A1</div><div class="ex-main"><div class="ex-name">Chest Press (Machine)</div><div class="ex-tags"><span class="ex-tag load">41 kg</span><span class="ex-tag sets">4 SETS</span><span class="ex-tag reps">4–6 REPS</span></div></div><div class="ex-chevron">⌄</div></div>
+    <div class="excard-body">
+      <div class="rx-grid"><div class="rx-box"><div class="rx-val">41kg</div><div class="rx-label">Load</div></div><div class="rx-box"><div class="rx-val">4</div><div class="rx-label">Sets</div></div><div class="rx-box"><div class="rx-val">4–6</div><div class="rx-label">Reps</div></div><div class="rx-box"><div class="rx-val">RPE 8</div><div class="rx-label">Effort</div></div></div>
+      <div class="tempo-box"><div class="tempo-row"><div class="tempo-digit"><div class="tempo-num">3</div><div class="tempo-l">Lower</div></div><div class="tempo-sep">-</div><div class="tempo-digit"><div class="tempo-num">1</div><div class="tempo-l">Pause</div></div><div class="tempo-sep">-</div><div class="tempo-digit"><div class="tempo-num">X</div><div class="tempo-l">Press</div></div><div class="tempo-sep">-</div><div class="tempo-digit"><div class="tempo-num">1</div><div class="tempo-l">Squeeze</div></div></div></div>
+      <div class="key-cue">Handles at nipple line. Lower 3 sec. 1-sec pause at bottom. Drive explosively. 1-sec squeeze at top.</div>
+      <div class="cue-label">Setup</div>
+      <div class="cue-item"><strong>Seat height:</strong> handles align with mid-chest — nipple line. Too high = shoulders not chest.</div>
+      <div class="cue-item"><strong>Back:</strong> fully pressed into pad. Lower back stays on seat throughout.</div>
+      <div class="cue-item"><strong>Feet:</strong> flat on floor under knees. Don't push through your legs.</div>
+      <div class="cue-label">Execution</div>
+      <div class="cue-item">Lower handles over exactly 3 seconds. Feel the chest stretch at the bottom.</div>
+      <div class="cue-item">1-second pause at the bottom — no bouncing. This forces the chest to do the work.</div>
+      <div class="cue-item">Press explosively — as fast as possible. Speed on the concentric builds power.</div>
+      <div class="cue-item">Squeeze the chest hard for 1 second at full extension before the next rep.</div>
+      <div class="cue-label">Common Errors</div>
+      <div class="error-item">Seat too high — shifts all load to anterior deltoid, not chest</div>
+      <div class="error-item">Bouncing at the bottom — removes time under tension entirely</div>
+      <div class="error-item">Hips rising off seat — you're pushing through legs, not chest</div>
+      <div class="error-item">Elbows flaring to 90° — shoulder impingement risk, bring elbows slightly narrower</div>
+      <div class="cue-label">What You Should Feel</div>
+      <div class="feel-box">A deep stretch across your chest at the bottom. A squeezing contraction across the centre of your chest at the top. If your shoulders feel dominant, lower the seat one notch.</div>
+      <div class="cue-label">Muscles Worked</div>
+      <div class="muscle-row"><span class="mtag primary">Pectoralis Major</span><span class="mtag primary">Anterior Deltoid</span><span class="mtag secondary">Triceps</span><span class="mtag secondary">Serratus Anterior</span></div>
+      <div class="rest-btn" onclick="startTimer(event,'Rest — Chest Press',180,'Next: Seated Row')"><div class="rest-btn-icon">⏱</div><div class="rest-btn-text"><div class="rest-btn-label">Rest Period</div><div class="rest-btn-time">3:00</div></div><div class="rest-btn-arrow">▶</div></div>
+    </div>
+  </div>
+
+  <div class="excard" onclick="toggle(this)">
+    <div class="excard-header"><div class="ex-num str">B1</div><div class="ex-main"><div class="ex-name">Seated Row (Machine)</div><div class="ex-tags"><span class="ex-tag load">50 kg</span><span class="ex-tag sets">4 SETS</span><span class="ex-tag reps">4–6 REPS</span></div></div><div class="ex-chevron">⌄</div></div>
+    <div class="excard-body">
+      <div class="rx-grid"><div class="rx-box"><div class="rx-val">50kg</div><div class="rx-label">Load</div></div><div class="rx-box"><div class="rx-val">4</div><div class="rx-label">Sets</div></div><div class="rx-box"><div class="rx-val">4–6</div><div class="rx-label">Reps</div></div><div class="rx-box"><div class="rx-val">RPE 8</div><div class="rx-label">Effort</div></div></div>
+      <div class="tempo-box"><div class="tempo-row"><div class="tempo-digit"><div class="tempo-num">3</div><div class="tempo-l">Return</div></div><div class="tempo-sep">-</div><div class="tempo-digit"><div class="tempo-num">1</div><div class="tempo-l">Hold</div></div><div class="tempo-sep">-</div><div class="tempo-digit"><div class="tempo-num">X</div><div class="tempo-l">Pull</div></div><div class="tempo-sep">-</div><div class="tempo-digit"><div class="tempo-num">1</div><div class="tempo-l">Squeeze</div></div></div></div>
+      <div class="key-cue">The FIRST thing that moves is your shoulder blades — not your arms. Retract before you pull. This is what makes it a back exercise not a bicep exercise.</div>
+      <div class="cue-label">Setup</div>
+      <div class="cue-item"><strong>Chest pad:</strong> sits across mid-chest. Arms nearly fully extended at the start.</div>
+      <div class="cue-item"><strong>Grip:</strong> overhand, slightly wider than shoulder width.</div>
+      <div class="cue-item"><strong>Posture:</strong> sit upright. Don't round your lower back at any point.</div>
+      <div class="cue-label">Execution</div>
+      <div class="cue-item">Initiate by squeezing shoulder blades back and down — before bending elbows.</div>
+      <div class="cue-item">Row handles toward your lower sternum. Elbows track close to body.</div>
+      <div class="cue-item">Hold peak contraction 1 second. Feel the mid-back squeeze deeply.</div>
+      <div class="cue-item">Return over 3 seconds — let shoulder blades fully protract and arms extend.</div>
+      <div class="cue-label">Common Errors</div>
+      <div class="error-item">Pulling with arms first — back doesn't engage. Initiate with the blade squeeze.</div>
+      <div class="error-item">Rocking backward off the pad — momentum cheat. Stay chest against the pad.</div>
+      <div class="error-item">Elbows too high — rowing to neck shifts to upper traps, not mid-back</div>
+      <div class="error-item">Short range — not letting arms extend fully. Full stretch at the bottom required.</div>
+      <div class="cue-label">What You Should Feel</div>
+      <div class="feel-box">A deep contraction between your shoulder blades — rhomboids and mid-traps. A stretch across your upper back as arms extend. If you mainly feel biceps, you're arm-pulling instead of back-rowing.</div>
+      <div class="cue-label">Muscles Worked</div>
+      <div class="muscle-row"><span class="mtag primary">Rhomboids</span><span class="mtag primary">Mid Trapezius</span><span class="mtag primary">Latissimus Dorsi</span><span class="mtag secondary">Rear Deltoid</span><span class="mtag secondary">Biceps</span></div>
+      <div class="rest-btn" onclick="startTimer(event,'Rest — Seated Row',180,'Next: Shoulder Press')"><div class="rest-btn-icon">⏱</div><div class="rest-btn-text"><div class="rest-btn-label">Rest Period</div><div class="rest-btn-time">3:00</div></div><div class="rest-btn-arrow">▶</div></div>
+    </div>
+  </div>
+
+  <div class="excard" onclick="toggle(this)">
+    <div class="excard-header"><div class="ex-num str">C1</div><div class="ex-main"><div class="ex-name">Shoulder Press (Machine)</div><div class="ex-tags"><span class="ex-tag load">27 kg</span><span class="ex-tag sets">3 SETS</span><span class="ex-tag reps">5–6 REPS</span></div></div><div class="ex-chevron">⌄</div></div>
+    <div class="excard-body">
+      <div class="rx-grid"><div class="rx-box"><div class="rx-val">27kg</div><div class="rx-label">Load</div></div><div class="rx-box"><div class="rx-val">3</div><div class="rx-label">Sets</div></div><div class="rx-box"><div class="rx-val">5–6</div><div class="rx-label">Reps</div></div><div class="rx-box"><div class="rx-val">RPE 8</div><div class="rx-label">Effort</div></div></div>
+      <div class="tempo-box"><div class="tempo-row"><div class="tempo-digit"><div class="tempo-num">3</div><div class="tempo-l">Lower</div></div><div class="tempo-sep">-</div><div class="tempo-digit"><div class="tempo-num">1</div><div class="tempo-l">Pause</div></div><div class="tempo-sep">-</div><div class="tempo-digit"><div class="tempo-num">X</div><div class="tempo-l">Press</div></div><div class="tempo-sep">-</div><div class="tempo-digit"><div class="tempo-num">1</div><div class="tempo-l">Hold</div></div></div></div>
+      <div class="key-cue">Actively push your shoulders DOWN as you press UP. Traps should never rise toward your ears — the moment they do, the delts disengage completely.</div>
+      <div class="cue-label">Setup</div>
+      <div class="cue-item"><strong>Seat height:</strong> handles at shoulder height when seated. Elbows at 90° before pressing.</div>
+      <div class="cue-item"><strong>Back:</strong> fully against pad. Core lightly braced to prevent lower back arching.</div>
+      <div class="cue-item"><strong>Grip:</strong> wrists straight. If they're bending back, the weight is too heavy.</div>
+      <div class="cue-label">Execution</div>
+      <div class="cue-item">Press to full lockout — arms straight. Shoulders actively pressed DOWN throughout.</div>
+      <div class="cue-item">Lower over 3 seconds back to 90°. Don't go lower than the machine's natural stop.</div>
+      <div class="cue-item">No shrugging at any point. Consciously depress shoulders on every rep.</div>
+      <div class="cue-label">Common Errors</div>
+      <div class="error-item">Seat too high — turns this into an upper trap exercise, not a delt exercise</div>
+      <div class="error-item">Shrugging at the top — consciously depress shoulders throughout the press</div>
+      <div class="error-item">Leaning back — arching spine off the pad. Brace core harder or reduce weight.</div>
+      <div class="error-item">Wrists bending back — weight is too heavy or grip position needs adjusting</div>
+      <div class="cue-label">What You Should Feel</div>
+      <div class="feel-box">A burn across the top and front of your shoulders. Some tricep fatigue at the end of hard sets is normal. If you feel it mainly in your upper traps near your neck, the seat is too high — lower it one notch.</div>
+      <div class="cue-label">Muscles Worked</div>
+      <div class="muscle-row"><span class="mtag primary">Anterior Deltoid</span><span class="mtag primary">Medial Deltoid</span><span class="mtag secondary">Triceps</span><span class="mtag secondary">Upper Trapezius</span></div>
+      <div class="rest-btn" onclick="startTimer(event,'Rest — Shoulder Press',150,'Next: Lat Pulldown')"><div class="rest-btn-icon">⏱</div><div class="rest-btn-text"><div class="rest-btn-label">Rest Period</div><div class="rest-btn-time">2:30</div></div><div class="rest-btn-arrow">▶</div></div>
+    </div>
+  </div>
+
+  <div class="excard" onclick="toggle(this)">
+    <div class="excard-header"><div class="ex-num str">D1</div><div class="ex-main"><div class="ex-name">Lat Pulldown (Machine)</div><div class="ex-tags"><span class="ex-tag load">59 kg</span><span class="ex-tag sets">4 SETS</span><span class="ex-tag reps">4–6 REPS</span></div></div><div class="ex-chevron">⌄</div></div>
+    <div class="excard-body">
+      <div class="rx-grid"><div class="rx-box"><div class="rx-val">59kg</div><div class="rx-label">Load</div></div><div class="rx-box"><div class="rx-val">4</div><div class="rx-label">Sets</div></div><div class="rx-box"><div class="rx-val">4–6</div><div class="rx-label">Reps</div></div><div class="rx-box"><div class="rx-val">RPE 8</div><div class="rx-label">Effort</div></div></div>
+      <div class="tempo-box"><div class="tempo-row"><div class="tempo-digit"><div class="tempo-num">3</div><div class="tempo-l">Return</div></div><div class="tempo-sep">-</div><div class="tempo-digit"><div class="tempo-num">1</div><div class="tempo-l">Stretch</div></div><div class="tempo-sep">-</div><div class="tempo-digit"><div class="tempo-num">X</div><div class="tempo-l">Pull</div></div><div class="tempo-sep">-</div><div class="tempo-digit"><div class="tempo-num">1</div><div class="tempo-l">Squeeze</div></div></div></div>
+      <div class="key-cue">Before arms bend — drive shoulder blades DOWN and BACK. This is the lat engaging, not biceps. If biceps fatigue first, you're arm-pulling.</div>
+      <div class="cue-label">Setup</div>
+      <div class="cue-item"><strong>Knee pad:</strong> snug against thighs. Wide overhand grip at the angled bar section.</div>
+      <div class="cue-item"><strong>Position:</strong> 10–15° lean back — hold this angle throughout the entire set.</div>
+      <div class="cue-item"><strong>Start:</strong> arms fully extended overhead. Full lat stretch every single rep.</div>
+      <div class="cue-label">Execution</div>
+      <div class="cue-item">Initiate: shoulder blades depress down and back first. Then elbows drive down.</div>
+      <div class="cue-item">Pull bar to upper chest — just below the collarbone. Hold 1 second at peak.</div>
+      <div class="cue-item">Return over 3 seconds to full overhead stretch. Feel the lat lengthening.</div>
+      <div class="cue-label">Common Errors</div>
+      <div class="error-item">Pulling bar behind neck — high injury risk, zero benefit. Never do this.</div>
+      <div class="error-item">Not reaching full overhead stretch at top — losing half the lat stimulus</div>
+      <div class="error-item">Leaning back past 30° — this becomes a row, not a pulldown</div>
+      <div class="error-item">Arm-pulling instead of back-pulling — initiate with shoulder blade depression first</div>
+      <div class="cue-label">What You Should Feel</div>
+      <div class="feel-box">A stretch through the side of your back (under your armpit) at the top, and a deep squeeze in the same place at the bottom. Bicep fatigue is secondary — the lats should be the main driver.</div>
+      <div class="cue-label">Muscles Worked</div>
+      <div class="muscle-row"><span class="mtag primary">Latissimus Dorsi</span><span class="mtag primary">Lower Trapezius</span><span class="mtag secondary">Biceps</span><span class="mtag secondary">Rear Deltoid</span><span class="mtag secondary">Teres Major</span></div>
+      <div class="rest-btn" onclick="startTimer(event,'Rest — Lat Pulldown',150,'Next: Rear Delt Machine')"><div class="rest-btn-icon">⏱</div><div class="rest-btn-text"><div class="rest-btn-label">Rest Period</div><div class="rest-btn-time">2:30</div></div><div class="rest-btn-arrow">▶</div></div>
+    </div>
+  </div>
+
+  <div class="excard new-card" onclick="toggle(this)">
+    <div class="excard-header"><div class="ex-num hype">E1</div><div class="ex-main"><div class="ex-name">Rear Delt Fly (Machine)</div><div class="ex-tags"><span class="ex-tag load">27 kg</span><span class="ex-tag sets">3 SETS</span><span class="ex-tag reps">15–20 REPS</span><span class="ex-tag new">SHOULDER HEALTH</span></div></div><div class="ex-chevron">⌄</div></div>
+    <div class="excard-body">
+      <div class="rx-grid"><div class="rx-box"><div class="rx-val">27kg</div><div class="rx-label">Load</div></div><div class="rx-box"><div class="rx-val">3</div><div class="rx-label">Sets</div></div><div class="rx-box"><div class="rx-val">15–20</div><div class="rx-label">Reps</div></div><div class="rx-box"><div class="rx-val">RPE 7</div><div class="rx-label">Effort</div></div></div>
+      <div class="tempo-box"><div class="tempo-row"><div class="tempo-digit"><div class="tempo-num">2</div><div class="tempo-l">Return</div></div><div class="tempo-sep">-</div><div class="tempo-digit"><div class="tempo-num">2</div><div class="tempo-l">Hold</div></div><div class="tempo-sep">-</div><div class="tempo-digit"><div class="tempo-num">X</div><div class="tempo-l">Pull</div></div><div class="tempo-sep">-</div><div class="tempo-digit"><div class="tempo-num">1</div><div class="tempo-l">Squeeze</div></div></div></div>
+      <div class="key-cue">Sit FACING the machine. Handles at EYE LEVEL. Arms nearly straight throughout — the moment elbows bend significantly, rear delt switches off.</div>
+      <div class="cue-label">Setup</div>
+      <div class="cue-item">Sit facing the machine (opposite direction to chest fly). Handles at eye level.</div>
+      <div class="cue-item">Grip with nearly straight arms — 10–15° elbow bend maximum.</div>
+      <div class="cue-item">Chest lightly against the back of the pad. Don't lean heavily into it.</div>
+      <div class="cue-label">Execution</div>
+      <div class="cue-item">Pull handles outward and back in a wide arc. Lead with elbows — arms like rigid levers.</div>
+      <div class="cue-item">Hold 2 seconds at peak. Feel the contraction behind the shoulder joint.</div>
+      <div class="cue-item">Return slowly over 2 seconds. Let the rear delt stretch as arms come forward.</div>
+      <div class="cue-label">Common Errors</div>
+      <div class="error-item">Bending elbows too much — immediately turns it into a row, rear delt switches off</div>
+      <div class="error-item">Handles too low — shifts load to mid-trap not rear delt. Keep at eye level.</div>
+      <div class="error-item">Going too heavy — small muscle. If you're heaving, reduce weight.</div>
+      <div class="error-item">Rushing reps — rear delts respond to slow controlled work only</div>
+      <div class="cue-label">What You Should Feel</div>
+      <div class="feel-box">A contraction at the very back of your shoulder — behind and below the main delt. It's a small muscle so the sensation is more of a deep ache than a powerful squeeze. High reps and strict form only — never heavy loads.</div>
+      <div class="cue-label">Muscles Worked</div>
+      <div class="muscle-row"><span class="mtag primary">Posterior Deltoid</span><span class="mtag secondary">Infraspinatus</span><span class="mtag secondary">Teres Minor</span><span class="mtag secondary">Rhomboids</span></div>
+      <div class="rest-btn" onclick="startTimer(event,'Rest — Rear Delt',75,'Next: Tricep Pushdown')"><div class="rest-btn-icon">⏱</div><div class="rest-btn-text"><div class="rest-btn-label">Rest Period</div><div class="rest-btn-time">1:15</div></div><div class="rest-btn-arrow">▶</div></div>
+    </div>
+  </div>
+
+  <div class="excard" onclick="toggle(this)">
+    <div class="excard-header"><div class="ex-num hype">F1</div><div class="ex-main"><div class="ex-name">Triceps Rope Pushdown</div><div class="ex-tags"><span class="ex-tag load">14.7 kg</span><span class="ex-tag sets">2 SETS</span><span class="ex-tag reps">8–10 REPS</span></div></div><div class="ex-chevron">⌄</div></div>
+    <div class="excard-body">
+      <div class="rx-grid"><div class="rx-box"><div class="rx-val">14.7kg</div><div class="rx-label">Load</div></div><div class="rx-box"><div class="rx-val">2</div><div class="rx-label">Sets</div></div><div class="rx-box"><div class="rx-val">8–10</div><div class="rx-label">Reps</div></div><div class="rx-box"><div class="rx-val">RPE 8</div><div class="rx-label">Effort</div></div></div>
+      <div class="tempo-box"><div class="tempo-row"><div class="tempo-digit"><div class="tempo-num">2</div><div class="tempo-l">Return</div></div><div class="tempo-sep">-</div><div class="tempo-digit"><div class="tempo-num">1</div><div class="tempo-l">Pause</div></div><div class="tempo-sep">-</div><div class="tempo-digit"><div class="tempo-num">X</div><div class="tempo-l">Push</div></div><div class="tempo-sep">-</div><div class="tempo-digit"><div class="tempo-num">1</div><div class="tempo-l">Flare</div></div></div></div>
+      <div class="key-cue">Elbows pinned to sides throughout. At the bottom — FLARE the rope ends outward. This is the peak tricep contraction. Without the flare you're missing 30% of the stimulus.</div>
+      <div class="cue-label">Setup</div>
+      <div class="cue-item">Cable stack set to top. Rope attachment. Stand close, slight forward lean (10–15°).</div>
+      <div class="cue-item">Grip one rope end in each hand. Upper arms pinned to your sides — they stay there.</div>
+      <div class="cue-label">Execution</div>
+      <div class="cue-item">Push rope downward to full arm extension. Flare ends outward at the bottom.</div>
+      <div class="cue-item">Hold flared position for 1 second. Return slowly to forearms parallel to floor.</div>
+      <div class="cue-item">Elbows never rise above starting position on the return.</div>
+      <div class="cue-label">Common Errors</div>
+      <div class="error-item">Elbows flaring outward — keep them pinned to your sides throughout</div>
+      <div class="error-item">Leaning too far forward and rowing the weight — keep movement vertical</div>
+      <div class="error-item">Not flaring rope at the bottom — this kills the peak contraction</div>
+      <div class="error-item">Letting forearms travel above parallel on the return — losing control of the eccentric</div>
+      <div class="cue-label">What You Should Feel</div>
+      <div class="feel-box">A hard contraction across the back of the upper arm at full extension with the rope flared. The lateral head of the tricep fires most strongly here. By rep 8–10 the back of your arm should be burning significantly.</div>
+      <div class="cue-label">Muscles Worked</div>
+      <div class="muscle-row"><span class="mtag primary">Triceps Lateral Head</span><span class="mtag primary">Triceps Medial Head</span><span class="mtag secondary">Triceps Long Head</span><span class="mtag secondary">Anconeus</span></div>
+      <div class="rest-btn" onclick="startTimer(event,'Rest — Triceps',75,'Monday complete!')"><div class="rest-btn-icon">⏱</div><div class="rest-btn-text"><div class="rest-btn-label">Rest Period</div><div class="rest-btn-time">1:15</div></div><div class="rest-btn-arrow">▶</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- TUESDAY -->
+
+<div class="panel" id="panel-tue">
+  <div class="day-header lower">
+    <div class="dh-day">Day 02 · Tuesday</div>
+    <div class="dh-title">LOWER BODY — POWER</div>
+    <div class="dh-desc">Glute priority day. Heavy squat and hinge. 4–6 reps on main work. Take full rest periods — lower body needs them.</div>
+  </div>
+  <div class="pills">
+    <div class="pill"><div class="pill-val">18</div><div class="pill-label">Working Sets</div></div>
+    <div class="pill"><div class="pill-val">58</div><div class="pill-label">Minutes</div></div>
+    <div class="pill"><div class="pill-val">4–6</div><div class="pill-label">Main Reps</div></div>
+    <div class="pill"><div class="pill-val">🍑</div><div class="pill-label">Glute Focus</div></div>
+  </div>
+  <div class="warmup-note"><div class="warmup-note-title">⚡ Before You Start</div><p>5 min bike → hip circles → world's greatest stretch → glute bridge 3×10 (3-sec hold). Warm-up sets on pendulum squat: 40% (≈18kg) ×10, then 65% (≈28kg) ×6.</p></div>
+
+  <div class="excard" onclick="toggle(this)">
+    <div class="excard-header"><div class="ex-num str">A1</div><div class="ex-main"><div class="ex-name">Pendulum Squat (Machine)</div><div class="ex-tags"><span class="ex-tag load">44 kg</span><span class="ex-tag sets">4 SETS</span><span class="ex-tag reps">4–6 REPS</span></div></div><div class="ex-chevron">⌄</div></div>
+    <div class="excard-body">
+      <div class="rx-grid"><div class="rx-box"><div class="rx-val">44kg</div><div class="rx-label">Load</div></div><div class="rx-box"><div class="rx-val">4</div><div class="rx-label">Sets</div></div><div class="rx-box"><div class="rx-val">4–6</div><div class="rx-label">Reps</div></div><div class="rx-box"><div class="rx-val">RPE 8</div><div class="rx-label">Effort</div></div></div>
+      <div class="tempo-box"><div class="tempo-row"><div class="tempo-digit"><div class="tempo-num">3</div><div class="tempo-l">Lower</div></div><div class="tempo-sep">-</div><div class="tempo-digit"><div class="tempo-num">1</div><div class="tempo-l">Pause</div></div><div class="tempo-sep">-</div><div class="tempo-digit"><div class="tempo-num">X</div><div class="tempo-l">Drive</div></div><div class="tempo-sep">-</div><div class="tempo-digit"><div class="tempo-num">1</div><div class="tempo-l">Hold</div></div></div></div>
+      <div class="key-cue">Sit DOWN not back. The machine arc keeps you upright — use it. Parallel minimum every single rep. No partial reps accepted.</div>
+      <div class="cue-label">Setup</div>
+      <div class="cue-item">Feet shoulder-width, mid-platform. Toes out 15–30° — find the angle that allows deepest squat.</div>
+      <div class="cue-item">Shoulder pads across upper traps — not your neck. Unrack standing fully upright.</div>
+      <div class="cue-item">Elevate heels slightly with a plate if ankles restrict your depth.</div>
+      <div class="cue-label">Execution</div>
+      <div class="cue-item">Descend over 3 seconds. Thighs to parallel or below — 1-sec pause at the bottom.</div>
+      <div class="cue-item">Drive through mid-foot. Push knees outward actively — track over toes throughout.</div>
+      <div class="cue-item">Explode upward. 1-second pause at the top before the next rep.</div>
+      <div class="cue-label">Common Errors</div>
+      <div class="error-item">Partial reps — only going halfway. Get to parallel minimum every rep.</div>
+      <div class="error-item">Knees caving inward on the drive — push them outward. Reduce weight if needed.</div>
+      <div class="error-item">Rising onto toes at the bottom — elevate heels slightly with small plates.</div>
+      <div class="error-item">Feet too high on platform — shifts load to glutes, reduces quad stimulus.</div>
+      <div class="cue-label">What You Should Feel</div>
+      <div class="feel-box">Deep burn across the entire front of your thighs. Glutes contributing on the drive. If you feel it mainly in your knees, you're not deep enough — load is going through the joint instead of the muscle.</div>
+      <div class="cue-label">Muscles Worked</div>
+      <div class="muscle-row"><span class="mtag primary">Quadriceps (all 4)</span><span class="mtag primary">Gluteus Maximus</span><span class="mtag secondary">Adductors</span><span class="mtag secondary">Hamstrings</span></div>
+      <div class="rest-btn" onclick="startTimer(event,'Rest — Pendulum Squat',210,'Next: Hip Thrust — GLUTE PRIORITY')"><div class="rest-btn-icon">⏱</div><div class="rest-btn-text"><div class="rest-btn-label">Rest Period</div><div class="rest-btn-time">3:30</div></div><div class="rest-btn-arrow">▶</div></div>
+    </div>
+  </div>
+
+  <div class="excard glute-card" onclick="toggle(this)">
+    <div class="excard-header"><div class="ex-num glut">B1</div><div class="ex-main"><div class="ex-name">Hip Thrust (Machine)</div><div class="ex-tags"><span class="ex-tag load">47.7 kg</span><span class="ex-tag sets">5 SETS</span><span class="ex-tag reps">4–6 REPS</span><span class="ex-tag glute">🍑 GLUTE PRIORITY</span></div></div><div class="ex-chevron">⌄</div></div>
+    <div class="excard-body">
+      <div class="rx-grid"><div class="rx-box"><div class="rx-val">47.7kg</div><div class="rx-label">Load</div></div><div class="rx-box"><div class="rx-val">5</div><div class="rx-label">Sets</div></div><div class="rx-box"><div class="rx-val">4–6</div><div class="rx-label">Reps</div></div><div class="rx-box"><div class="rx-val">RPE 8</div><div class="rx-label">Effort</div></div></div>
+      <div class="tempo-box"><div class="tempo-row"><div class="tempo-digit"><div class="tempo-num">2</div><div class="tempo-l">Lower</div></div><div class="tempo-sep">-</div><div class="tempo-digit"><div class="tempo-num">2</div><div class="tempo-l">Squeeze</div></div><div class="tempo-sep">-</div><div class="tempo-digit"><div class="tempo-num">X</div><div class="tempo-l">Drive</div></div><div class="tempo-sep">-</div><div class="tempo-digit"><div class="tempo-num">1</div><div class="tempo-l">Hold</div></div></div></div>
+      <div class="key-cue">Drive through HEELS only. 2-second glute squeeze at the top — every rep, no exceptions. This is where glute stimulus peaks. Skip the squeeze and you've wasted the set.</div>
+      <div class="cue-label">Setup</div>
+      <div class="cue-item">Shoulders on bench edge. Feet flat, directly under your knees at the top position.</div>
+      <div class="cue-item">Hip pad sits at your hip crease — not your stomach or thighs.</div>
+      <div class="cue-item">Chin slightly tucked. Neutral neck throughout the entire set.</div>
+      <div class="cue-label">Execution</div>
+      <div class="cue-item">Drive through heels — not toes — to full hip extension. Body forms straight line from knees to shoulders.</div>
+      <div class="cue-item">SQUEEZE glutes hard for 2 full seconds at the top. Count it out if needed.</div>
+      <div class="cue-item">No lower back hyperextension — tuck pelvis, keep ribs down at the top.</div>
+      <div class="cue-label">Common Errors</div>
+      <div class="error-item">Pushing through toes instead of heels — shifts load from glutes to quads</div>
+      <div class="error-item">Skipping the 2-second squeeze — the squeeze is where glute activation peaks</div>
+      <div class="error-item">Lower back hyperextending at the top — ribs flaring. Tuck pelvis lower.</div>
+      <div class="error-item">Head craning backward — keep chin tucked, neutral neck throughout</div>
+      <div class="cue-label">What You Should Feel</div>
+      <div class="feel-box">A powerful squeeze directly in the centre of your glutes at the top of every rep. Some hamstring tension throughout. If you feel it mainly in your lower back, your hips are hyperextending — reduce the ROM and focus on the pelvic tuck.</div>
+      <div class="cue-label">Muscles Worked</div>
+      <div class="muscle-row"><span class="mtag primary">Gluteus Maximus</span><span class="mtag primary">Gluteus Medius</span><span class="mtag secondary">Hamstrings</span><span class="mtag secondary">Quadriceps</span></div>
+      <div class="rest-btn" onclick="startTimer(event,'Rest — Hip Thrust',180,'Next: Leg Press')"><div class="rest-btn-icon">⏱</div><div class="rest-btn-text"><div class="rest-btn-label">Rest Period</div><div class="rest-btn-time">3:00</div></div><div class="rest-btn-arrow">▶</div></div>
+    </div>
+  </div>
+
+  <div class="excard" onclick="toggle(this)">
+    <div class="excard-header"><div class="ex-num str">C1</div><div class="ex-main"><div class="ex-name">Leg Press (Machine)</div><div class="ex-tags"><span class="ex-tag load">205 kg</span><span class="ex-tag sets">3 SETS</span><span class="ex-tag reps">5–6 REPS</span></div></div><div class="ex-chevron">⌄</div></div>
+    <div class="excard-body">
+      <div class="rx-grid"><div class="rx-box"><div class="rx-val">205kg</div><div class="rx-label">Load</div></div><div class="rx-box"><div class="rx-val">3</div><div class="rx-label">Sets</div></div><div class="rx-box"><div class="rx-val">5–6</div><div class="rx-label">Reps</div></div><div class="rx-box"><div class="rx-val">RPE 8</div><div class="rx-label">Effort</div></div></div>
+      <div class="tempo-box"><div class="tempo-row"><div class="tempo-digit"><div class="tempo-num">3</div><div class="tempo-l">Lower</div></div><div class="tempo-sep">-</div><div class="tempo-digit"><div class="tempo-num">1</div><div class="tempo-l">Pause</div></div><div class="tempo-sep">-</div><div class="tempo-digit"><div class="tempo-num">X</div><div class="tempo-l">Drive</div></div><div class="tempo-sep">-</div><div class="tempo-digit"><div class="tempo-num">1</div><div class="tempo-l">Hold</div></div></div></div>
+      <div class="key-cue">Lower back GLUED to the seat for every rep. The moment it peels off, that rep is done. Feet shoulder-width, mid-platform.</div>
+      <div class="cue-label">Setup</div>
+      <div class="cue-item">Feet shoulder-width, mid-platform. Toes turned out slightly (15–20°).</div>
+      <div class="cue-item">Lower back pressed firmly into the seat pad — stays there for every rep.</div>
+      <div class="cue-item">Lower until knees at 90° or slightly past — thighs near parallel to the platform.</div>
+      <div class="cue-label">Execution</div>
+      <div class="cue-item">Lower over 3 seconds. Lower back stays glued to seat at all times.</div>
+      <div class="cue-item">Drive through mid-foot and heel — not toes. Explode upward.</div>
+      <div class="cue-item">Stop just short of full knee lockout at the top. Keep tension on the quads.</div>
+      <div class="cue-label">Common Errors</div>
+      <div class="error-item">Lower back rounding off the seat — most dangerous error. Reduce weight or depth.</div>
+      <div class="error-item">Feet too low on platform (toes only) — excessive knee stress</div>
+      <div class="error-item">Locking out knees fully at the top — removes tension, risks hyperextension</div>
+      <div class="error-item">Knees tracking inward — push them outward to track over toes throughout</div>
+      <div class="cue-label">What You Should Feel</div>
+      <div class="feel-box">Quad burn throughout. Glutes contributing on the drive. At 205kg this should feel like hard work but controlled. If you're grinding and losing form, reduce the weight.</div>
+      <div class="cue-label">Muscles Worked</div>
+      <div class="muscle-row"><span class="mtag primary">Quadriceps</span><span class="mtag primary">Gluteus Maximus</span><span class="mtag secondary">Hamstrings</span><span class="mtag secondary">Adductors</span></div>
+      <div class="rest-btn" onclick="startTimer(event,'Rest — Leg Press',150,'Next: Glute Bias Leg Press')"><div class="rest-btn-icon">⏱</div><div class="rest-btn-text"><div class="rest-btn-label">Rest Period</div><div class="rest-btn-time">2:30</div></div><div class="rest-btn-arrow">▶</div></div>
+    </div>
+  </div>
+
+  <div class="excard glute-card" onclick="toggle(this)">
+    <div class="excard-header"><div class="ex-num glut">D1</div><div class="ex-main"><div class="ex-name">Leg Press — High Foot Glute Bias</div><div class="ex-tags"><span class="ex-tag load">140 kg</span><span class="ex-tag sets">3 SETS</span><span class="ex-tag reps">8–10 REPS</span><span class="ex-tag glute">🍑 GLUTE VARIATION</span></div></div><div class="ex-chevron">⌄</div></div>
+    <div class="excard-body">
+      <div class="rx-grid"><div class="rx-box"><div class="rx-val">140kg</div><div class="rx-label">Load</div></div><div class="rx-box"><div class="rx-val">3</div><div class="rx-label">Sets</div></div><div class="rx-box"><div class="rx-val">8–10</div><div class="rx-label">Reps</div></div><div class="rx-box"><div class="rx-val">RPE 8</div><div class="rx-label">Effort</div></div></div>
+      <div class="tempo-box"><div class="tempo-row"><div class="tempo-digit"><div class="tempo-num">3</div><div class="tempo-l">Lower</div></div><div class="tempo-sep">-</div><div class="tempo-digit"><div class="tempo-num">2</div><div class="tempo-l">Stretch</div></div><div class="tempo-sep">-</div><div class="tempo-digit"><div class="tempo-num">X</div><div class="tempo-l">Drive</div></div><div class="tempo-sep">-</div><div class="tempo-digit"><div class="tempo-num">1</div><div class="tempo-l">Hold</div></div></div></div>
+      <div class="key-cue">Feet HIGH and WIDE on the platform. This changes the emphasis from quads to glutes entirely. Use significantly less weight than standard leg press.</div>
+      <div class="cue-label">Setup</div>
+      <div class="cue-item">Feet at the TOP of the platform, wider than shoulder-width, toes out 30–45°.</div>
+      <div class="cue-item">This foot position loads the glutes heavily at the bottom of the movement.</div>
+      <div class="cue-item">140kg — significantly less than standard leg press. The angle changes everything.</div>
+      <div class="cue-label">Execution</div>
+      <div class="cue-item">Lower slowly over 3 seconds. Feel the deep glute stretch at the bottom — 2-sec pause there.</div>
+      <div class="cue-item">Drive through heels. Glutes should feel like they're doing the work, not quads.</div>
+      <div class="cue-item">Lower back stays on the seat — same rule as standard leg press.</div>
+      <div class="cue-label">Common Errors</div>
+      <div class="error-item">Feet not high enough — if you feel mainly quads, move feet higher on platform</div>
+      <div class="error-item">Using standard leg press weight — this variation needs significantly less load</div>
+      <div class="error-item">Not pausing at the bottom — the glute stretch is the entire point of this variation</div>
+      <div class="error-item">Lower back peeling off the seat — same rule applies as standard leg press</div>
+      <div class="cue-label">What You Should Feel</div>
+      <div class="feel-box">A deep glute stretch at the bottom that you don't feel in the standard leg press position. Glutes should fire much more strongly on the drive. If you still feel mainly quads, move feet higher and wider.</div>
+      <div class="cue-label">Muscles Worked</div>
+      <div class="muscle-row"><span class="mtag primary">Gluteus Maximus</span><span class="mtag primary">Hamstrings</span><span class="mtag secondary">Adductors</span><span class="mtag secondary">Gluteus Medius</span></div>
+      <div class="rest-btn" onclick="startTimer(event,'Rest — Glute Leg Press',120,'Next: Seated Leg Curl')"><div class="rest-btn-icon">⏱</div><div class="rest-btn-text"><div class="rest-btn-label">Rest Period</div><div class="rest-btn-time">2:00</div></div><div class="rest-btn-arrow">▶</div></div>
+    </div>
+  </div>
+
+  <div class="excard" onclick="toggle(this)">
+    <div class="excard-header"><div class="ex-num hype">E1</div><div class="ex-main"><div class="ex-name">Seated Leg Curl (Machine)</div><div class="ex-tags"><span class="ex-tag load">50 kg</span><span class="ex-tag sets">3 SETS</span><span class="ex-tag reps">6–8 REPS</span></div></div><div class="ex-chevron">⌄</div></div>
+    <div class="excard-body">
+      <div class="rx-grid"><div class="rx-box"><div class="rx-val">50kg</div><div class="rx-label">Load</div></div><div class="rx-box"><div class="rx-val">3</div><div class="rx-label">Sets</div></div><div class="rx-box"><div class="rx-val">6–8</div><div class="rx-label">Reps</div></div><div class="rx-box"><div class="rx-val">RPE 8</div><div class="rx-label">Effort</div></div></div>
+      <div class="tempo-box"><div class="tempo-row"><div class="tempo-digit"><div class="tempo-num">3</div><div class="tempo-l">Return</div></div><div class="tempo-sep">-</div><div class="tempo-digit"><div class="tempo-num">1</div><div class="tempo-l">Stretch</div></div><div class="tempo-sep">-</div><div class="tempo-digit"><div class="tempo-num">X</div><div class="tempo-l">Curl</div></div><div class="tempo-sep">-</div><div class="tempo-digit"><div class="tempo-num">1</div><div class="tempo-l">Hold</div></div></div></div>
+      <div class="key-cue">Full leg extension at the top — every rep. The stretch with legs fully extended is the most important part of this exercise. Return over 3 full seconds. Do not let the weight crash down.</div>
+      <div class="cue-label">Setup</div>
+      <div class="cue-item">Sit fully back. Lower back against the support pad. Thigh pad just above your knees.</div>
+      <div class="cue-item">Start with legs fully extended — feel the hamstring stretch at this position every rep.</div>
+      <div class="cue-label">Execution</div>
+      <div class="cue-item">Curl heels toward your seat as far as the machine allows.</div>
+      <div class="cue-item">Hold peak contraction for 1 second — squeeze hard at full curl.</div>
+      <div class="cue-item">Return over 3 full seconds to complete leg extension. Never crash the weight down.</div>
+      <div class="cue-label">Common Errors</div>
+      <div class="error-item">Not reaching full extension at the top — losing the stretch-mediated stimulus</div>
+      <div class="error-item">Hips rising off the seat during the curl — thigh pad too loose or weight too heavy</div>
+      <div class="error-item">Letting the weight crash back — the 3-second return is essential for growth</div>
+      <div class="error-item">Feet turned excessively — keep neutral ankle position throughout</div>
+      <div class="cue-label">What You Should Feel</div>
+      <div class="feel-box">A stretch across the back of your thigh when legs are fully extended. A hard contraction at the back of the knee area when fully curled. If hamstrings cramp, you may be dehydrated or the weight is too heavy.</div>
+      <div class="cue-label">Muscles Worked</div>
+      <div class="muscle-row"><span class="mtag primary">Biceps Femoris</span><span class="mtag primary">Semimembranosus</span><span class="mtag primary">Semitendinosus</span><span class="mtag secondary">Gastrocnemius</span></div>
+      <div class="rest-btn" onclick="startTimer(event,'Rest — Leg Curl',120,'Tuesday complete!')"><div class="rest-btn-icon">⏱</div><div class="rest-btn-text"><div class="rest-btn-label">Rest Period</div><div class="rest-btn-time">2:00</div></div><div class="rest-btn-arrow">▶</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- WEDNESDAY -->
+
+<div class="panel" id="panel-wed">
+  <div class="day-header push">
+    <div class="dh-day">Day 03 · Wednesday</div>
+    <div class="dh-title">PUSH — HYPERTROPHY</div>
+    <div class="dh-desc">Higher reps, slightly less load than Monday. 8–12 rep range. Feel the muscle on every rep. Abs finisher at the end.</div>
+  </div>
+  <div class="pills">
+    <div class="pill"><div class="pill-val">22</div><div class="pill-label">Working Sets</div></div>
+    <div class="pill"><div class="pill-val">58</div><div class="pill-label">Minutes</div></div>
+    <div class="pill"><div class="pill-val">8–12</div><div class="pill-label">Rep Range</div></div>
+    <div class="pill"><div class="pill-val">+ ABS</div><div class="pill-label">Finisher</div></div>
+  </div>
+  <div class="warmup-note"><div class="warmup-note-title">⚡ Before You Start</div><p>5 min bike → arm swings → external rotation 2×15 (lightest cable) → prone cobra ×10. Warm-up sets on incline press at 40% and 65% of working weight.</p></div>
+
+  <div class="excard" onclick="toggle(this)">
+    <div class="excard-header"><div class="ex-num hype">A1</div><div class="ex-main"><div class="ex-name">Incline Chest Press (Machine)</div><div class="ex-tags"><span class="ex-tag load">27 kg</span><span class="ex-tag sets">4 SETS</span><span class="ex-tag reps">10–12 REPS</span></div></div><div class="ex-chevron">⌄</div></div>
+    <div class="excard-body">
+      <div class="rx-grid"><div class="rx-box"><div class="rx-val">27kg</div><div class="rx-label">Load</div></div><div class="rx-box"><div class="rx-val">4</div><div class="rx-label">Sets</div></div><div class="rx-box"><div class="rx-val">10–12</div><div class="rx-label">Reps</div></div><div class="rx-box"><div class="rx-val">RPE 8</div><div class="rx-label">Effort</div></div></div>
+      <div class="tempo-box"><div class="tempo-row"><div class="tempo-digit"><div class="tempo-num">3</div><div class="tempo-l">Lower</div></div><div class="tempo-sep">-</div><div class="tempo-digit"><div class="tempo-num">1</div><div class="tempo-l">Pause</div></div><div class="tempo-sep">-</div><div class="tempo-digit"><div class="tempo-num">X</div><div class="tempo-l">Press</div></div><div class="tempo-sep">-</div><div class="tempo-digit"><div class="tempo-num">1</div><div class="tempo-l">Squeeze</div></div></div></div>
+      <div class="key-cue">30–45° angle ONLY. Above 45° it becomes a shoulder press. Handles at collarbone level. Think "push toward the ceiling" not "push forward."</div>
+      <div class="cue-label">Setup</div>
+      <div class="cue-item">Set incline to 30–45°. Steeper than 45° shifts stimulus to shoulders entirely.</div>
+      <div class="cue-item">Handles align with your upper chest/collarbone area when seated.</div>
+      <div class="cue-item">Shoulder blades retracted against the pad. Chest up throughout.</div>
+      <div class="cue-label">Execution</div>
+      <div class="cue-item">Lower over 3 seconds — feel the stretch across upper chest. 1-sec pause at bottom.</div>
+      <div class="cue-item">Press toward the ceiling following the angle of the machine. Squeeze upper chest at top.</div>
+      <div class="cue-item">Shoulder blades stay retracted — don't let shoulders round forward at any point.</div>
+      <div class="cue-label">Common Errors</div>
+      <div class="error-item">Angle too steep (above 45°) — becomes a shoulder press, not upper chest</div>
+      <div class="error-item">Seat too low — forces dangerous shoulder angle at the bottom of the range</div>
+      <div class="error-item">Shoulders rounding forward — retract blades and hold that position throughout</div>
+      <div class="error-item">Bouncing at the bottom — 1-second pause eliminates this. Feel the stretch.</div>
+      <div class="cue-label">What You Should Feel</div>
+      <div class="feel-box">A stretch and then squeeze specifically in the upper chest — just below your collarbone. Some anterior delt fatigue is normal. If your shoulders are working harder than your chest, the angle is too steep.</div>
+      <div class="cue-label">Muscles Worked</div>
+      <div class="muscle-row"><span class="mtag primary">Upper Pec (Clavicular Head)</span><span class="mtag primary">Anterior Deltoid</span><span class="mtag secondary">Triceps</span></div>
+      <div class="rest-btn" onclick="startTimer(event,'Rest — Incline Press',120,'Next: Pec Deck')"><div class="rest-btn-icon">⏱</div><div class="rest-btn-text"><div class="rest-btn-label">Rest Period</div><div class="rest-btn-time">2:00</div></div><div class="rest-btn-arrow">▶</div></div>
+    </div>
+  </div>
+
+  <div class="excard" onclick="toggle(this)">
+    <div class="excard-header"><div class="ex-num hype">B1</div><div class="ex-main"><div class="ex-name">Chest Fly / Pec Deck (Machine)</div><div class="ex-tags"><span class="ex-tag load">43 kg</span><span class="ex-tag sets">4 SETS</span><span class="ex-tag reps">12–15 REPS</span></div></div><div class="ex-chevron">⌄</div></div>
+    <div class="excard-body">
+      <div class="rx-grid"><div class="rx-box"><div class="rx-val">43kg</div><div class="rx-label">Load</div></div><div class="rx-box"><div class="rx-val">4</div><div class="rx-label">Sets</div></div><div class="rx-box"><div class="rx-val">12–15</div><div class="rx-label">Reps</div></div><div class="rx-box"><div class="rx-val">RPE 8</div><div class="rx-label">Effort</div></div></div>
+      <div class="tempo-box"><div class="tempo-row"><div class="tempo-digit"><div class="tempo-num">3</div><div class="tempo-l">Open</div></div><div class="tempo-sep">-</div><div class="tempo-digit"><div class="tempo-num">2</div><div class="tempo-l">Stretch</div></div><div class="tempo-sep">-</div><div class="tempo-digit"><div class="tempo-num">X</div><div class="tempo-l">Close</div></div><div class="tempo-sep">-</div><div class="tempo-digit"><div class="tempo-num">1</div><div class="tempo-l">Squeeze</div></div></div></div>
+      <div class="key-cue">2-second pause at the OPEN position. This stretch drives hypertrophy. Most people skip it — that's the difference between a good and a great set.</div>
+      <div class="cue-label">Setup</div>
+      <div class="cue-item">Seat height: arm pads at mid-chest level — nipple line.</div>
+      <div class="cue-item">Forearms flush against the pads from elbow to wrist — not just gripping handles.</div>
+      <div class="cue-item">Starting width: wide enough to feel a stretch, not so wide it's uncomfortable.</div>
+      <div class="cue-label">Execution</div>
+      <div class="cue-item">Let arms open over 3 seconds. Hold at full stretch for 2 seconds — breathe into it.</div>
+      <div class="cue-item">Squeeze pads together in a wide arc — think "hugging a large tree."</div>
+      <div class="cue-item">Squeeze hard for 1 second when pads meet or nearly meet.</div>
+      <div class="cue-label">Common Errors</div>
+      <div class="error-item">Arms going too far back at the open position — anterior shoulder strain risk</div>
+      <div class="error-item">Bending elbows too much — turns it into a press, not a fly</div>
+      <div class="error-item">Skipping the 2-second stretch pause — this is the primary hypertrophy stimulus</div>
+      <div class="error-item">Seat too high or too low — handles must be at mid-chest when seated</div>
+      <div class="cue-label">What You Should Feel</div>
+      <div class="feel-box">A stretching pull across the entire chest at the open position. A squeezing clench across the centre of the chest at the close. The machine keeps tension where dumbbells go slack — use the full range every rep.</div>
+      <div class="cue-label">Muscles Worked</div>
+      <div class="muscle-row"><span class="mtag primary">Pectoralis Major (full)</span><span class="mtag secondary">Anterior Deltoid</span><span class="mtag secondary">Pectoralis Minor</span></div>
+      <div class="rest-btn" onclick="startTimer(event,'Rest — Pec Deck',90,'Next: Chest Press Hypertrophy')"><div class="rest-btn-icon">⏱</div><div class="rest-btn-text"><div class="rest-btn-label">Rest Period</div><div class="rest-btn-time">1:30</div></div><div class="rest-btn-arrow">▶</div></div>
+    </div>
+  </div>
+
+  <div class="excard" onclick="toggle(this)">
+    <div class="excard-header"><div class="ex-num hype">C1</div><div class="ex-main"><div class="ex-name">Chest Press (Machine) — Hypertrophy</div><div class="ex-tags"><span class="ex-tag load">36 kg</span><span class="ex-tag sets">3 SETS</span><span class="ex-tag reps">10–12 REPS</span></div></div><div class="ex-chevron">⌄</div></div>
+    <div class="excard-body">
+      <div class="rx-grid"><div class="rx-box"><div class="rx-val">36kg</div><div class="rx-label">Load</div></div><div class="rx-box"><div class="rx-val">3</div><div class="rx-label">Sets</div></div><div class="rx-box"><div class="rx-val">10–12</div><div class="rx-label">Reps</div></div><div class="rx-box"><div class="rx-val">RPE 8</div><div class="rx-label">Effort</div></div></div>
+      <div class="tempo-box"><div class="tempo-row"><div class="tempo-digit"><div class="tempo-num">3</div><div class="tempo-l">Lower</div></div><div class="tempo-sep">-</div><div class="tempo-digit"><div class="tempo-num">1</div><div class="tempo-l">Pause</div></div><div class="tempo-sep">-</div><div class="tempo-digit"><div class="tempo-num">X</div><div class="tempo-l">Press</div></div><div class="tempo-sep">-</div><div class="tempo-digit"><div class="tempo-num">1</div><div class="tempo-l">Squeeze</div></div></div></div>
+      <div class="key-cue">DUP — same movement as Monday at 36kg not 41kg, and 10–12 reps not 4–6. Focus on the muscle squeeze, not the weight.</div>
+      <div class="cue-label">Setup</div>
+      <div class="cue-item">Same setup as Monday's chest press. Seat at nipple line. Back fully into pad.</div>
+      <div class="cue-item">36kg — lighter than Monday. Rep 12 should feel RPE 8.</div>
+      <div class="cue-label">Execution</div>
+      <div class="cue-item">Same 3-1-X-1 tempo as Monday. Focus more on the chest squeeze at the top.</div>
+      <div class="cue-item">Because weight is lighter, concentrate on feeling the chest working on every rep.</div>
+      <div class="cue-label">Common Errors</div>
+      <div class="error-item">Using Monday's 41kg here — this is hypertrophy volume. Drop the load.</div>
+      <div class="error-item">Rushing through reps because weight feels lighter — use slower tempo</div>
+      <div class="error-item">Skipping the 1-second bottom pause — this is the key cue for chest activation</div>
+      <div class="error-item">Seat position wrong — still needs handles at nipple line just like Monday</div>
+      <div class="cue-label">What You Should Feel</div>
+      <div class="feel-box">A chest pump building across all 3 sets. Because weight is lower you can concentrate more on mind-muscle connection — really feel the chest working. By set 3 rep 12 should be genuinely challenging.</div>
+      <div class="cue-label">Muscles Worked</div>
+      <div class="muscle-row"><span class="mtag primary">Pectoralis Major</span><span class="mtag primary">Anterior Deltoid</span><span class="mtag secondary">Triceps</span></div>
+      <div class="rest-btn" onclick="startTimer(event,'Rest — Chest Press',90,'Next: Shoulder Press Hypertrophy')"><div class="rest-btn-icon">⏱</div><div class="rest-btn-text"><div class="rest-btn-label">Rest Period</div><div class="rest-btn-time">1:30</div></div><div class="rest-btn-arrow">▶</div></div>
+    </div>
+  </div>
+
+  <div class="excard" onclick="toggle(this)">
+    <div class="excard-header"><div class="ex-num hype">D1</div><div class="ex-main"><div class="ex-name">Shoulder Press (Machine) — Hypertrophy</div><div class="ex-tags"><span class="ex-tag load">23 kg</span><span class="ex-tag sets">3 SETS</span><span class="ex-tag reps">10–12 REPS</span></div></div><div class="ex-chevron">⌄</div></div>
+    <div class="excard-body">
+      <div class="rx-grid"><div class="rx-box"><div class="rx-val">23kg</div><div class="rx-label">Load</div></div><div class="rx-box"><div class="rx-val">3</div><div class="rx-label">Sets</div></div><div class="rx-box"><div class="rx-val">10–12</div><div class="rx-label">Reps</div></div><div class="rx-box"><div class="rx-val">RPE 8</div><div class="rx-label">Effort</div></div></div>
+      <div class="tempo-box"><div class="tempo-row"><div class="tempo-digit"><div class="tempo-num">3</div><div class="tempo-l">Lower</div></div><div class="tempo-sep">-</div><div class="tempo-digit"><div class="tempo-num">1</div><div class="tempo-l">Pause</div></div><div class="tempo-sep">-</div><div class="tempo-digit"><div class="tempo-num">X</div><div class="tempo-l">Press</div></div><div class="tempo-sep">-</div><div class="tempo-digit"><div class="tempo-num">1</div><div class="tempo-l">Hold</div></div></div></div>
+      <div class="key-cue">Lower load than Monday, higher reps. Delt feel — not a grind. Shoulders are your weakest push pattern — this extra frequency is how you bring them up.</div>
+      <div class="cue-label">Setup</div>
+      <div class="cue-item">Same setup as Monday. Handles at shoulder height. Elbows at 90° before pressing.</div>
+      <div class="cue-item">23kg not 27kg — hypertrophy volume. Rep 12 should feel RPE 8.</div>
+      <div class="cue-label">Execution</div>
+      <div class="cue-item">Press to full lockout. Shoulders actively depressed throughout — no shrugging.</div>
+      <div class="cue-item">Lower over 3 seconds. Focus on feeling the delt on every rep.</div>
+      <div class="cue-label">Common Errors</div>
+      <div class="error-item">Using Monday's 27kg here — drop to 23kg for hypertrophy volume</div>
+      <div class="error-item">Shrugging at the top — trap engagement means delts have switched off</div>
+      <div class="error-item">Seat too high — turns this into upper trap work, not delt work</div>
+      <div class="error-item">Back arching off the pad — brace core harder or reduce weight</div>
+      <div class="cue-label">What You Should Feel</div>
+      <div class="feel-box">A burn specifically across the outer shoulder — front and side deltoid. Because weight is lighter than Monday you should have better mind-muscle connection. Focus on the squeeze at the top and the stretch at the bottom.</div>
+      <div class="cue-label">Muscles Worked</div>
+      <div class="muscle-row"><span class="mtag primary">Anterior Deltoid</span><span class="mtag primary">Medial Deltoid</span><span class="mtag secondary">Triceps</span><span class="mtag secondary">Upper Trapezius</span></div>
+      <div class="rest-btn" onclick="startTimer(event,'Rest — Shoulder Press',120,'Next: Lateral Raise')"><div class="rest-btn-icon">⏱</div><div class="rest-btn-text"><div class="rest-btn-label">Rest Period</div><div class="rest-btn-time">2:00</div></div><div class="rest-btn-arrow">▶</div></div>
+    </div>
+  </div>
+
+  <div class="excard new-card" onclick="toggle(this)">
+    <div class="excard-header"><div class="ex-num hype">E1</div><div class="ex-main"><div class="ex-name">Lateral Raise (Dumbbell)</div><div class="ex-tags"><span class="ex-tag load">8 kg DB</span><span class="ex-tag sets">5 SETS</span><span class="ex-tag reps">15–20 REPS</span><span class="ex-tag new">+1 SET</span></div></div><div class="ex-chevron">⌄</div></div>
+    <div class="excard-body">
+      <div class="rx-grid"><div class="rx-box"><div class="rx-val">8kg</div><div class="rx-label">Load</div></div><div class="rx-box"><div class="rx-val">5</div><div class="rx-label">Sets</div></div><div class="rx-box"><div class="rx-val">15–20</div><div class="rx-label">Reps</div></div><div class="rx-box"><div class="rx-val">RPE 9</div><div class="rx-label">Effort</div></div></div>
+      <div class="tempo-box"><div class="tempo-row"><div class="tempo-digit"><div class="tempo-num">2</div><div class="tempo-l">Lower</div></div><div class="tempo-sep">-</div><div class="tempo-digit"><div class="tempo-num">0</div><div class="tempo-l">No pause</div></div><div class="tempo-sep">-</div><div class="tempo-digit"><div class="tempo-num">X</div><div class="tempo-l">Raise</div></div><div class="tempo-sep">-</div><div class="tempo-digit"><div class="tempo-num">2</div><div class="tempo-l">Hold</div></div></div></div>
+      <div class="key-cue">Lead with ELBOWS — not hands. Stop at shoulder height exactly. 2-second hold at top. Lower over 2 full seconds. If you're swinging, the weight is too heavy.</div>
+      <div class="cue-label">Setup</div>
+      <div class="cue-item">Stand tall. Slight forward lean from hips (5–10°) — improves medial delt targeting.</div>
+      <div class="cue-item">Pinky slightly higher than thumb. Soft bend in elbows (10–15°) throughout.</div>
+      <div class="cue-label">Execution</div>
+      <div class="cue-item">Raise arms out to the sides — lead with elbows, hands slightly lower.</div>
+      <div class="cue-item">Stop exactly at shoulder height. 2-second hold — squeeze the medial delt hard.</div>
+      <div class="cue-item">Lower over 2 full seconds. Resist gravity — the lowering is half the stimulus.</div>
+      <div class="cue-label">Common Errors</div>
+      <div class="error-item">Shrugging traps — shoulders rising toward ears. Actively depress them throughout.</div>
+      <div class="error-item">Swinging the body for momentum — drop 2kg and go strict</div>
+      <div class="error-item">Raising above shoulder height — past parallel the upper traps take over</div>
+      <div class="error-item">Thumbs higher than pinkies — internally rotates the shoulder, impingement risk</div>
+      <div class="cue-label">What You Should Feel</div>
+      <div class="feel-box">A burning sensation on the outer middle part of your shoulder — the medial deltoid. Not the front and not the trap. At 8kg this should be manageable for 15 reps but burning hard by 18–20. Shoulder width comes from here.</div>
+      <div class="cue-label">Muscles Worked</div>
+      <div class="muscle-row"><span class="mtag primary">Medial Deltoid</span><span class="mtag secondary">Anterior Deltoid</span><span class="mtag secondary">Supraspinatus</span></div>
+      <div class="rest-btn" onclick="startTimer(event,'Rest — Lateral Raise',60,'Next: Cable Crunch (Abs)')"><div class="rest-btn-icon">⏱</div><div class="rest-btn-text"><div class="rest-btn-label">Rest Period</div><div class="rest-btn-time">1:00</div></div><div class="rest-btn-arrow">▶</div></div>
+    </div>
+  </div>
+
+  <div class="phase-head"><div class="phase-icon">💪</div><div style="flex:1"><div class="phase-label">Ab Finisher</div><div class="phase-sub">2× per week · Wed + Fri</div></div><div class="phase-info">~8 MIN</div></div>
+
+  <div class="excard abs-card" onclick="toggle(this)">
+    <div class="excard-header"><div class="ex-num ab">F1</div><div class="ex-main"><div class="ex-name">Cable Crunch (Machine)</div><div class="ex-tags"><span class="ex-tag load">~20 kg</span><span class="ex-tag sets">3 SETS</span><span class="ex-tag reps">15–20 REPS</span><span class="ex-tag abs">ABS</span></div></div><div class="ex-chevron">⌄</div></div>
+    <div class="excard-body">
+      <div class="rx-grid"><div class="rx-box"><div class="rx-val">~20kg</div><div class="rx-label">Load</div></div><div class="rx-box"><div class="rx-val">3</div><div class="rx-label">Sets</div></div><div class="rx-box"><div class="rx-val">15–20</div><div class="rx-label">Reps</div></div><div class="rx-box"><div class="rx-val">RPE 8</div><div class="rx-label">Effort</div></div></div>
+      <div class="key-cue">Curl the RIBCAGE toward the PELVIS — not a hip flexor movement. Full exhale at the bottom. Hips stay completely still throughout.</div>
+      <div class="cue-label">Setup</div>
+      <div class="cue-item">Kneel facing the cable stack. Rope attachment set high. Hold rope ends at your temples.</div>
+      <div class="cue-item">Start upright — the full range is from upright down to curled over knees.</div>
+      <div class="cue-label">Execution</div>
+      <div class="cue-item">Curl your ribcage toward your knees — spine flexion only. Hips stay fixed.</div>
+      <div class="cue-item">Exhale fully at the bottom — maximum ab contraction happens with full exhale.</div>
+      <div class="cue-item">Return slowly to upright. Control the return — don't let weight pull you back.</div>
+      <div class="cue-label">Common Errors</div>
+      <div class="error-item">Hip flexing instead of spine flexing — hips should stay still, only spine moves</div>
+      <div class="error-item">Pulling with arms not abs — the rope is a guide, abs do all the work</div>
+      <div class="error-item">Not exhaling at the bottom — exhale is what creates maximum ab contraction</div>
+      <div class="error-item">Too heavy — if you can't control the movement, it's too heavy. Start light.</div>
+      <div class="cue-label">What You Should Feel</div>
+      <div class="feel-box">A strong contraction across your entire abdominal wall at the bottom of each rep. A stretch through the abs as you return to upright. By rep 15–20 this should be genuinely burning.</div>
+      <div class="cue-label">Muscles Worked</div>
+      <div class="muscle-row"><span class="mtag primary">Rectus Abdominis</span><span class="mtag secondary">Obliques</span><span class="mtag secondary">Transverse Abdominis</span></div>
+      <div class="rest-btn" onclick="startTimer(event,'Rest — Cable Crunch',60,'Next: Hanging Knee Raise')"><div class="rest-btn-icon">⏱</div><div class="rest-btn-text"><div class="rest-btn-label">Rest Period</div><div class="rest-btn-time">1:00</div></div><div class="rest-btn-arrow">▶</div></div>
+    </div>
+  </div>
+
+  <div class="excard abs-card" onclick="toggle(this)">
+    <div class="excard-header"><div class="ex-num ab">G1</div><div class="ex-main"><div class="ex-name">Hanging Knee Raise (Parallel Bars)</div><div class="ex-tags"><span class="ex-tag load">BW</span><span class="ex-tag sets">3 SETS</span><span class="ex-tag reps">10–15 REPS</span><span class="ex-tag abs">ABS</span></div></div><div class="ex-chevron">⌄</div></div>
+    <div class="excard-body">
+      <div class="rx-grid"><div class="rx-box"><div class="rx-val">BW</div><div class="rx-label">Load</div></div><div class="rx-box"><div class="rx-val">3</div><div class="rx-label">Sets</div></div><div class="rx-box"><div class="rx-val">10–15</div><div class="rx-label">Reps</div></div><div class="rx-box"><div class="rx-val">RPE 8</div><div class="rx-label">Effort</div></div></div>
+      <div class="key-cue">Bring knees all the way to your chest — not just hip height. Control the lowering fully. No swinging. You've done these before (logged 12 Feb).</div>
+      <div class="cue-label">Setup</div>
+      <div class="cue-item">Forearms on the parallel bars. Grip handles firmly. Body hanging freely.</div>
+      <div class="cue-item">Start with legs hanging straight down. Slight posterior pelvic tilt to engage abs.</div>
+      <div class="cue-label">Execution</div>
+      <div class="cue-item">Bring both knees up toward your chest — as high as possible, not just hip height.</div>
+      <div class="cue-item">Hold at the top for 1 second. Lower slowly over 2 seconds to full hang.</div>
+      <div class="cue-item">Progression: when 15 reps is easy, straighten legs for full hanging leg raises.</div>
+      <div class="cue-label">Common Errors</div>
+      <div class="error-item">Swinging with momentum — control the movement fully. No kipping.</div>
+      <div class="error-item">Only bringing knees to hip height — bring them to your chest for full stimulus</div>
+      <div class="error-item">Letting legs drop fast — controlled 2-second lowering is half the exercise</div>
+      <div class="error-item">Gripping too tight and tensing upper body — stay relaxed everywhere except abs</div>
+      <div class="cue-label">What You Should Feel</div>
+      <div class="feel-box">A deep contraction across your lower abdominals as knees rise to chest. A stretch through the abs as legs return to the hang. By rep 12–15 your abs should be significantly fatigued.</div>
+      <div class="cue-label">Muscles Worked</div>
+      <div class="muscle-row"><span class="mtag primary">Lower Rectus Abdominis</span><span class="mtag secondary">Hip Flexors</span><span class="mtag secondary">Obliques</span></div>
+      <div class="rest-btn" onclick="startTimer(event,'Rest — Knee Raise',60,'Wednesday complete!')"><div class="rest-btn-icon">⏱</div><div class="rest-btn-text"><div class="rest-btn-label">Rest Period</div><div class="rest-btn-time">1:00</div></div><div class="rest-btn-arrow">▶</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- THURSDAY -->
+
+<div class="panel" id="panel-thu">
+  <div class="day-header pull">
+    <div class="dh-day">Day 04 · Thursday</div>
+    <div class="dh-title">PULL — HYPERTROPHY</div>
+    <div class="dh-desc">Back, biceps, and rear delts. Higher reps than Monday. Feel the back muscles contracting — not just the biceps.</div>
+  </div>
+  <div class="pills">
+    <div class="pill"><div class="pill-val">20</div><div class="pill-label">Working Sets</div></div>
+    <div class="pill"><div class="pill-val">55</div><div class="pill-label">Minutes</div></div>
+    <div class="pill"><div class="pill-val">10–12</div><div class="pill-label">Rep Range</div></div>
+    <div class="pill"><div class="pill-val">RPE 8</div><div class="pill-label">Intensity</div></div>
+  </div>
+  <div class="warmup-note"><div class="warmup-note-title">⚡ Before You Start</div><p>5 min bike → band pull-aparts 3×15 → cat-cow ×12 → dynamic lat stretch ×10 each side. Warm-up sets on lat pulldown at 40% (≈21kg) ×10 and 65% (≈34kg) ×6.</p></div>
+
+  <div class="excard new-card" onclick="toggle(this)">
+    <div class="excard-header"><div class="ex-num hype">A1</div><div class="ex-main"><div class="ex-name">Lat Pulldown (Machine)</div><div class="ex-tags"><span class="ex-tag load">52 kg</span><span class="ex-tag sets">5 SETS</span><span class="ex-tag reps">10–12 REPS</span><span class="ex-tag new">+1 SET</span></div></div><div class="ex-chevron">⌄</div></div>
+    <div class="excard-body">
+      <div class="rx-grid"><div class="rx-box"><div class="rx-val">52kg</div><div class="rx-label">Load</div></div><div class="rx-box"><div class="rx-val">5</div><div class="rx-label">Sets</div></div><div class="rx-box"><div class="rx-val">10–12</div><div class="rx-label">Reps</div></div><div class="rx-box"><div class="rx-val">RPE 8</div><div class="rx-label">Effort</div></div></div>
+      <div class="tempo-box"><div class="tempo-row"><div class="tempo-digit"><div class="tempo-num">3</div><div class="tempo-l">Return</div></div><div class="tempo-sep">-</div><div class="tempo-digit"><div class="tempo-num">1</div><div class="tempo-l">Stretch</div></div><div class="tempo-sep">-</div><div class="tempo-digit"><div class="tempo-num">X</div><div class="tempo-l">Pull</div></div><div class="tempo-sep">-</div><div class="tempo-digit"><div class="tempo-num">1</div><div class="tempo-l">Squeeze</div></div></div></div>
+      <div class="key-cue">DUP — same movement as Monday at 52kg not 59kg, 10–12 reps not 4–6. Full overhead stretch is mandatory every single rep.</div>
+      <div class="cue-label">Setup</div>
+      <div class="cue-item">Same setup as Monday. Knee pad snug. Wide overhand grip. 10–15° lean back.</div>
+      <div class="cue-item">52kg — lighter than Monday. Rep 12 should be RPE 8.</div>
+      <div class="cue-label">Execution</div>
+      <div class="cue-item">Shoulder blade depression initiates every pull. Never arm-pull.</div>
+      <div class="cue-item">Full arm extension and overhead stretch at the top of every rep — don't cut this short.</div>
+      <div class="cue-item">Return over 3 seconds. Feel the lat lengthening as arms rise overhead.</div>
+      <div class="cue-label">Common Errors</div>
+      <div class="error-item">Using Monday's 59kg — this is 52kg for hypertrophy volume. Lighter, more reps.</div>
+      <div class="error-item">Not reaching full arm extension at the top — losing the lat stretch entirely</div>
+      <div class="error-item">Arm-pulling instead of back-pulling — initiate with shoulder blade depression first</div>
+      <div class="error-item">Pulling bar behind the neck — never. Upper chest only.</div>
+      <div class="cue-label">What You Should Feel</div>
+      <div class="feel-box">A stretch under your armpit (lat) at the top and a deep squeeze in the same place at the bottom. Because weight is lighter you should have more lat awareness than on Monday. Use that awareness.</div>
+      <div class="cue-label">Muscles Worked</div>
+      <div class="muscle-row"><span class="mtag primary">Latissimus Dorsi</span><span class="mtag primary">Lower Trapezius</span><span class="mtag secondary">Biceps</span><span class="mtag secondary">Rear Deltoid</span></div>
+      <div class="rest-btn" onclick="startTimer(event,'Rest — Lat Pulldown',120,'Next: Seated Row')"><div class="rest-btn-icon">⏱</div><div class="rest-btn-text"><div class="rest-btn-label">Rest Period</div><div class="rest-btn-time">2:00</div></div><div class="rest-btn-arrow">▶</div></div>
+    </div>
+  </div>
+
+  <div class="excard new-card" onclick="toggle(this)">
+    <div class="excard-header"><div class="ex-num hype">B1</div><div class="ex-main"><div class="ex-name">Seated Row (Machine)</div><div class="ex-tags"><span class="ex-tag load">50 kg</span><span class="ex-tag sets">5 SETS</span><span class="ex-tag reps">10–12 REPS</span><span class="ex-tag new">+1 SET</span></div></div><div class="ex-chevron">⌄</div></div>
+    <div class="excard-body">
+      <div class="rx-grid"><div class="rx-box"><div class="rx-val">50kg</div><div class="rx-label">Load</div></div><div class="rx-box"><div class="rx-val">5</div><div class="rx-label">Sets</div></div><div class="rx-box"><div class="rx-val">10–12</div><div class="rx-label">Reps</div></div><div class="rx-box"><div class="rx-val">RPE 8</div><div class="rx-label">Effort</div></div></div>
+      <div class="tempo-box"><div class="tempo-row"><div class="tempo-digit"><div class="tempo-num">3</div><div class="tempo-l">Return</div></div><div class="tempo-sep">-</div><div class="tempo-digit"><div class="tempo-num">1</div><div class="tempo-l">Hold</div></div><div class="tempo-sep">-</div><div class="tempo-digit"><div class="tempo-num">X</div><div class="tempo-l">Pull</div></div><div class="tempo-sep">-</div><div class="tempo-digit"><div class="tempo-num">1</div><div class="tempo-l">Squeeze</div></div></div></div>
+      <div class="key-cue">Same weight as Monday but MORE reps. Shoulder blade retraction initiates every single rep — same cue, same standard, every time.</div>
+      <div class="cue-label">Setup</div>
+      <div class="cue-item">Same setup as Monday. Chest pad at mid-chest. Arms nearly fully extended at the start.</div>
+      <div class="cue-item">50kg — same as Monday but 10–12 reps instead of 4–6. Rep 12 should be RPE 8.</div>
+      <div class="cue-label">Execution</div>
+      <div class="cue-item">Shoulder blades retract first — every rep. Non-negotiable.</div>
+      <div class="cue-item">Full arm extension at the end of every rep — don't cut range short.</div>
+      <div class="cue-item">Hold peak contraction 1 second on every rep. Feel the mid-back squeeze.</div>
+      <div class="cue-label">Common Errors</div>
+      <div class="error-item">Rocking backward off the pad — stay chest against pad throughout</div>
+      <div class="error-item">Pulling with arms before shoulder blades retract — back won't engage properly</div>
+      <div class="error-item">Elbows flaring too high — row to lower sternum, not your chin</div>
+      <div class="error-item">Short range of motion — not letting arms fully extend. Full stretch at the bottom critical.</div>
+      <div class="cue-label">What You Should Feel</div>
+      <div class="feel-box">A deep contraction between your shoulder blades — same as Monday but accumulated over more reps. By set 5 your mid-back should be thoroughly fatigued. If you mainly feel biceps, blade retraction needs to come first.</div>
+      <div class="cue-label">Muscles Worked</div>
+      <div class="muscle-row"><span class="mtag primary">Rhomboids</span><span class="mtag primary">Mid Trapezius</span><span class="mtag primary">Lats</span><span class="mtag secondary">Rear Deltoid</span><span class="mtag secondary">Biceps</span></div>
+      <div class="rest-btn" onclick="startTimer(event,'Rest — Seated Row',120,'Next: Rear Delt Fly')"><div class="rest-btn-icon">⏱</div><div class="rest-btn-text"><div class="rest-btn-label">Rest Period</div><div class="rest-btn-time">2:00</div></div><div class="rest-btn-arrow">▶</div></div>
+    </div>
+  </div>
+
+  <div class="excard" onclick="toggle(this)">
+    <div class="excard-header"><div class="ex-num hype">C1</div><div class="ex-main"><div class="ex-name">Rear Delt Fly (Machine)</div><div class="ex-tags"><span class="ex-tag load">27 kg</span><span class="ex-tag sets">3 SETS</span><span class="ex-tag reps">15–20 REPS</span></div></div><div class="ex-chevron">⌄</div></div>
+    <div class="excard-body">
+      <div class="rx-grid"><div class="rx-box"><div class="rx-val">27kg</div><div class="rx-label">Load</div></div><div class="rx-box"><div class="rx-val">3</div><div class="rx-label">Sets</div></div><div class="rx-box"><div class="rx-val">15–20</div><div class="rx-label">Reps</div></div><div class="rx-box"><div class="rx-val">RPE 7–8</div><div class="rx-label">Effort</div></div></div>
+      <div class="tempo-box"><div class="tempo-row"><div class="tempo-digit"><div class="tempo-num">2</div><div class="tempo-l">Return</div></div><div class="tempo-sep">-</div><div class="tempo-digit"><div class="tempo-num">2</div><div class="tempo-l">Hold</div></div><div class="tempo-sep">-</div><div class="tempo-digit"><div class="tempo-num">X</div><div class="tempo-l">Pull</div></div><div class="tempo-sep">-</div><div class="tempo-digit"><div class="tempo-num">1</div><div class="tempo-l">Squeeze</div></div></div></div>
+      <div class="key-cue">Handles at EYE LEVEL. Arms nearly straight. 2-sec hold at peak. Small muscle — feel it, don't heave it.</div>
+      <div class="cue-label">Setup</div>
+      <div class="cue-item">Sit facing the machine. Handles adjusted to eye level.</div>
+      <div class="cue-item">Grip with nearly straight arms. Chest lightly against back of the pad.</div>
+      <div class="cue-label">Execution</div>
+      <div class="cue-item">Pull handles back and apart in a wide arc. Lead with elbows — arms stay nearly straight.</div>
+      <div class="cue-item">Hold 2 seconds at peak. Feel the contraction behind the shoulder joint.</div>
+      <div class="cue-item">Return slowly over 2 seconds. Let the rear delt stretch as arms come forward.</div>
+      <div class="cue-label">Common Errors</div>
+      <div class="error-item">Bending elbows — rear delt switches off immediately. Arms stay nearly straight.</div>
+      <div class="error-item">Handles below eye level — shifts emphasis away from rear delt to mid-trap</div>
+      <div class="error-item">Too heavy — if you're heaving, you've lost the exercise. Drop the weight.</div>
+      <div class="error-item">Skipping the 2-second peak hold — this is where the rear delt contracts most</div>
+      <div class="cue-label">What You Should Feel</div>
+      <div class="feel-box">A contraction specifically at the back of the shoulder — behind and below the main deltoid. It's a small muscle with a subtle sensation. If you feel it mainly in your upper back or mid-traps, the handles are too low.</div>
+      <div class="cue-label">Muscles Worked</div>
+      <div class="muscle-row"><span class="mtag primary">Posterior Deltoid</span><span class="mtag secondary">Infraspinatus</span><span class="mtag secondary">Teres Minor</span><span class="mtag secondary">Mid Trapezius</span></div>
+      <div class="rest-btn" onclick="startTimer(event,'Rest — Rear Delt',75,'Next: Preacher Curl')"><div class="rest-btn-icon">⏱</div><div class="rest-btn-text"><div class="rest-btn-label">Rest Period</div><div class="rest-btn-time">1:15</div></div><div class="rest-btn-arrow">▶</div></div>
+    </div>
+  </div>
+
+  <div class="excard" onclick="toggle(this)">
+    <div class="excard-header"><div class="ex-num hype">D1</div><div class="ex-main"><div class="ex-name">Preacher Curl (EZ Bar)</div><div class="ex-tags"><span class="ex-tag load">15 kg</span><span class="ex-tag sets">3 SETS</span><span class="ex-tag reps">10–12 REPS</span></div></div><div class="ex-chevron">⌄</div></div>
+    <div class="excard-body">
+      <div class="rx-grid"><div class="rx-box"><div class="rx-val">15kg</div><div class="rx-label">Load</div></div><div class="rx-box"><div class="rx-val">3</div><div class="rx-label">Sets</div></div><div class="rx-box"><div class="rx-val">10–12</div><div class="rx-label">Reps</div></div><div class="rx-box"><div class="rx-val">RPE 9</div><div class="rx-label">Effort</div></div></div>
+      <div class="tempo-box"><div class="tempo-row"><div class="tempo-digit"><div class="tempo-num">3</div><div class="tempo-l">Lower</div></div><div class="tempo-sep">-</div><div class="tempo-digit"><div class="tempo-num">1</div><div class="tempo-l">Stretch</div></div><div class="tempo-sep">-</div><div class="tempo-digit"><div class="tempo-num">X</div><div class="tempo-l">Curl</div></div><div class="tempo-sep">-</div><div class="tempo-digit"><div class="tempo-num">1</div><div class="tempo-l">Squeeze</div></div></div></div>
+      <div class="key-cue">The 3-second descent to FULL arm extension is the most important part. The stretched bicep at the bottom is where most growth stimulus comes from. Elbows STAY on the pad.</div>
+      <div class="cue-label">Setup</div>
+      <div class="cue-item">Adjust seat so armpits sit at the top edge of the angled pad.</div>
+      <div class="cue-item">Entire upper arm from armpit to elbow flat against the pad — they don't move.</div>
+      <div class="cue-item">Use EZ bar (angled grip) — reduces wrist and elbow strain vs straight bar.</div>
+      <div class="cue-label">Execution</div>
+      <div class="cue-item">Start with arms fully extended. Feel the bicep stretch at this position.</div>
+      <div class="cue-item">Curl to just past vertical — stop before the weight goes slack at the top.</div>
+      <div class="cue-item">Lower over 3 full seconds back to complete arm extension — every rep.</div>
+      <div class="cue-label">Common Errors</div>
+      <div class="error-item">Elbows lifting off the pad — biggest error. Reduce weight immediately.</div>
+      <div class="error-item">Not reaching full arm extension at the bottom — losing primary growth stimulus</div>
+      <div class="error-item">Curling past vertical — weight goes slack, bicep unloads. Stop just before.</div>
+      <div class="error-item">Using a straight bar — EZ bar reduces wrist and elbow strain significantly</div>
+      <div class="cue-label">What You Should Feel</div>
+      <div class="feel-box">A powerful stretch down the front of your upper arm at the bottom — this is the most productive position for bicep growth. A hard squeeze at peak contraction. The value of this exercise is in the stretch at the bottom.</div>
+      <div class="cue-label">Muscles Worked</div>
+      <div class="muscle-row"><span class="mtag primary">Biceps Brachii (Long Head)</span><span class="mtag primary">Biceps (Short Head)</span><span class="mtag secondary">Brachialis</span><span class="mtag secondary">Brachioradialis</span></div>
+      <div class="rest-btn" onclick="startTimer(event,'Rest — Preacher Curl',90,'Next: Hammer Curl')"><div class="rest-btn-icon">⏱</div><div class="rest-btn-text"><div class="rest-btn-label">Rest Period</div><div class="rest-btn-time">1:30</div></div><div class="rest-btn-arrow">▶</div></div>
+    </div>
+  </div>
+
+  <div class="excard" onclick="toggle(this)">
+    <div class="excard-header"><div class="ex-num hype">E1</div><div class="ex-main"><div class="ex-name">Hammer Curl (Dumbbell)</div><div class="ex-tags"><span class="ex-tag load">12.5 kg</span><span class="ex-tag sets">4 SETS</span><span class="ex-tag reps">10–12 REPS</span></div></div><div class="ex-chevron">⌄</div></div>
+    <div class="excard-body">
+      <div class="rx-grid"><div class="rx-box"><div class="rx-val">12.5kg</div><div class="rx-label">Load</div></div><div class="rx-box"><div class="rx-val">4</div><div class="rx-label">Sets</div></div><div class="rx-box"><div class="rx-val">10–12</div><div class="rx-label">Reps</div></div><div class="rx-box"><div class="rx-val">RPE 8</div><div class="rx-label">Effort</div></div></div>
+      <div class="tempo-box"><div class="tempo-row"><div class="tempo-digit"><div class="tempo-num">3</div><div class="tempo-l">Lower</div></div><div class="tempo-sep">-</div><div class="tempo-digit"><div class="tempo-num">0</div><div class="tempo-l">No pause</div></div><div class="tempo-sep">-</div><div class="tempo-digit"><div class="tempo-num">X</div><div class="tempo-l">Curl</div></div><div class="tempo-sep">-</div><div class="tempo-digit"><div class="tempo-num">1</div><div class="tempo-l">Hold</div></div></div></div>
+      <div class="key-cue">Neutral grip — thumbs up. Elbow PINNED to your side. Don't supinate at the top. This targets the brachialis — the muscle under the bicep that creates arm thickness.</div>
+      <div class="cue-label">Setup</div>
+      <div class="cue-item">Stand tall. Dumbbells at sides, neutral grip (thumbs pointing up).</div>
+      <div class="cue-item">Elbows touching your torso at the start. They stay there throughout the entire set.</div>
+      <div class="cue-item">Alternate arms — curl one while the other holds the dumbbell at your side.</div>
+      <div class="cue-label">Execution</div>
+      <div class="cue-item">Curl the dumbbell upward keeping neutral grip throughout — don't rotate the wrist.</div>
+      <div class="cue-item">Elbow stays pinned to your side — the moment it drifts forward, weight is too heavy.</div>
+      <div class="cue-item">Lower over 3 seconds to full arm extension. Full extension every rep.</div>
+      <div class="cue-label">Common Errors</div>
+      <div class="error-item">Elbow drifting forward — pins to side throughout. Reduce weight if this happens.</div>
+      <div class="error-item">Swinging body for momentum — drop 2.5kg and go strict</div>
+      <div class="error-item">Supinating wrist at the top (rotating palm up) — keep neutral grip throughout</div>
+      <div class="error-item">Not lowering fully — full arm extension at the bottom every rep</div>
+      <div class="cue-label">What You Should Feel</div>
+      <div class="feel-box">A deep thick burning sensation in the muscle beneath your bicep (brachialis) and along the top of your forearm (brachioradialis). Different to the peak bicep burn of a regular curl — deeper and more diffuse. That's exactly right.</div>
+      <div class="cue-label">Muscles Worked</div>
+      <div class="muscle-row"><span class="mtag primary">Brachialis</span><span class="mtag primary">Brachioradialis</span><span class="mtag secondary">Biceps Brachii</span><span class="mtag secondary">Forearm Flexors</span></div>
+      <div class="rest-btn" onclick="startTimer(event,'Rest — Hammer Curl',75,'Thursday complete!')"><div class="rest-btn-icon">⏱</div><div class="rest-btn-text"><div class="rest-btn-label">Rest Period</div><div class="rest-btn-time">1:15</div></div><div class="rest-btn-arrow">▶</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- FRIDAY -->
+
+<div class="panel" id="panel-fri">
+  <div class="day-header lower">
+    <div class="dh-day">Day 05 · Friday</div>
+    <div class="dh-title">LOWER — HYPERTROPHY + GLUTES</div>
+    <div class="dh-desc">Your biggest session. Highest glute volume, quad hypertrophy, calf work, and ab finisher. 60 minutes — pace yourself.</div>
+  </div>
+  <div class="pills">
+    <div class="pill"><div class="pill-val">24</div><div class="pill-label">Working Sets</div></div>
+    <div class="pill"><div class="pill-val">60</div><div class="pill-label">Minutes</div></div>
+    <div class="pill"><div class="pill-val">10–15</div><div class="pill-label">Rep Range</div></div>
+    <div class="pill"><div class="pill-val">🍑+💪</div><div class="pill-label">Glute + Abs</div></div>
+  </div>
+  <div class="warmup-note"><div class="warmup-note-title">⚡ Glute Activation — Non-Negotiable</div><p>5 min bike → glute bridge 3×12 (3-sec hold) → fire hydrant 15 each side → deep squat hold 60 sec → hip flexor stretch 10 reps each side. Highest glute volume day — activation is critical.</p></div>
+
+  <div class="excard" onclick="toggle(this)">
+    <div class="excard-header"><div class="ex-num hype">A1</div><div class="ex-main"><div class="ex-name">Leg Press (Machine)</div><div class="ex-tags"><span class="ex-tag load">205 kg</span><span class="ex-tag sets">4 SETS</span><span class="ex-tag reps">10–12 REPS</span></div></div><div class="ex-chevron">⌄</div></div>
+    <div class="excard-body">
+      <div class="rx-grid"><div class="rx-box"><div class="rx-val">205kg</div><div class="rx-label">Load</div></div><div class="rx-box"><div class="rx-val">4</div><div class="rx-label">Sets</div></div><div class="rx-box"><div class="rx-val">10–12</div><div class="rx-label">Reps</div></div><div class="rx-box"><div class="rx-val">RPE 8</div><div class="rx-label">Effort</div></div></div>
+      <div class="tempo-box"><div class="tempo-row"><div class="tempo-digit"><div class="tempo-num">3</div><div class="tempo-l">Lower</div></div><div class="tempo-sep">-</div><div class="tempo-digit"><div class="tempo-num">1</div><div class="tempo-l">Pause</div></div><div class="tempo-sep">-</div><div class="tempo-digit"><div class="tempo-num">X</div><div class="tempo-l">Drive</div></div><div class="tempo-sep">-</div><div class="tempo-digit"><div class="tempo-num">1</div><div class="tempo-l">Hold</div></div></div></div>
+      <div class="key-cue">DUP — same load as Tuesday but 10–12 reps not 5–6. Lower back STAYS on the seat. Drive through mid-foot. No lockout at the top.</div>
+      <div class="cue-label">Setup</div>
+      <div class="cue-item">Standard position. Feet shoulder-width, mid-platform, toes slightly out.</div>
+      <div class="cue-item">Lower back pressed into seat — stays there for every single rep.</div>
+      <div class="cue-label">Execution</div>
+      <div class="cue-item">Lower over 3 seconds. 1-sec pause at the bottom. Drive through mid-foot.</div>
+      <div class="cue-item">Stop just short of full knee lockout. Maintain quad tension throughout.</div>
+      <div class="cue-label">Common Errors</div>
+      <div class="error-item">Lower back peeling off the seat — most common and most dangerous error</div>
+      <div class="error-item">Locking out knees at the top — keep soft bend, maintain quad tension</div>
+      <div class="error-item">Feet too low (toes only) — mid-platform minimum for knee safety</div>
+      <div class="error-item">Knees caving inward on the drive — push them outward actively</div>
+      <div class="cue-label">What You Should Feel</div>
+      <div class="feel-box">A deep quad burn building across all 4 sets. Glutes contributing on the drive. At 205kg for 10–12 reps this is hard work — it should be. This is your strongest machine lift.</div>
+      <div class="cue-label">Muscles Worked</div>
+      <div class="muscle-row"><span class="mtag primary">Quadriceps</span><span class="mtag primary">Gluteus Maximus</span><span class="mtag secondary">Hamstrings</span><span class="mtag secondary">Adductors</span></div>
+      <div class="rest-btn" onclick="startTimer(event,'Rest — Leg Press',150,'Next: Leg Extension')"><div class="rest-btn-icon">⏱</div><div class="rest-btn-text"><div class="rest-btn-label">Rest Period</div><div class="rest-btn-time">2:30</div></div><div class="rest-btn-arrow">▶</div></div>
+    </div>
+  </div>
+
+  <div class="excard" onclick="toggle(this)">
+    <div class="excard-header"><div class="ex-num hype">B1</div><div class="ex-main"><div class="ex-name">Leg Extension (Machine)</div><div class="ex-tags"><span class="ex-tag load">53.5 kg</span><span class="ex-tag sets">4 SETS</span><span class="ex-tag reps">10–12 REPS</span></div></div><div class="ex-chevron">⌄</div></div>
+    <div class="excard-body">
+      <div class="rx-grid"><div class="rx-box"><div class="rx-val">53.5kg</div><div class="rx-label">Load</div></div><div class="rx-box"><div class="rx-val">4</div><div class="rx-label">Sets</div></div><div class="rx-box"><div class="rx-val">10–12</div><div class="rx-label">Reps</div></div><div class="rx-box"><div class="rx-val">RPE 9</div><div class="rx-label">Effort</div></div></div>
+      <div class="tempo-box"><div class="tempo-row"><div class="tempo-digit"><div class="tempo-num">3</div><div class="tempo-l">Lower</div></div><div class="tempo-sep">-</div><div class="tempo-digit"><div class="tempo-num">2</div><div class="tempo-l">Squeeze</div></div><div class="tempo-sep">-</div><div class="tempo-digit"><div class="tempo-num">X</div><div class="tempo-l">Extend</div></div><div class="tempo-sep">-</div><div class="tempo-digit"><div class="tempo-num">1</div><div class="tempo-l">Hold</div></div></div></div>
+      <div class="key-cue">FULL lockout every rep. 2-second squeeze at full extension. Then 3-second controlled descent. This exercise builds all 4 quad heads — you need the full ROM to hit all of them.</div>
+      <div class="cue-label">Setup</div>
+      <div class="cue-item">Back of knee at the edge of the seat. Knee aligned with machine pivot point.</div>
+      <div class="cue-item">Thigh pad just above the knee. Thighs don't rise during extension.</div>
+      <div class="cue-label">Execution</div>
+      <div class="cue-item">Extend legs to full lockout — every rep, no stopping short.</div>
+      <div class="cue-item">Hold at full extension for 2 seconds — squeeze all four quad heads hard.</div>
+      <div class="cue-item">Lower over 3 seconds. Don't let the weight stack drop — resist gravity throughout.</div>
+      <div class="cue-label">Common Errors</div>
+      <div class="error-item">Knee misaligned with pivot — causes joint shearing. Adjust seat depth first.</div>
+      <div class="error-item">Not reaching full lockout — losing the peak quad contraction every rep</div>
+      <div class="error-item">Hips rising off the seat — thigh pad too loose or weight too heavy</div>
+      <div class="error-item">Rushing the descent — the 3-second lowering is where much of the stimulus comes from</div>
+      <div class="cue-label">What You Should Feel</div>
+      <div class="feel-box">An intense burn across the entire front of your thigh at high reps. The VMO (teardrop muscle just above and inside your knee) should be particularly fatigued. Pain IN the knee joint (not the muscles around it) means stop and check seat alignment.</div>
+      <div class="cue-label">Muscles Worked</div>
+      <div class="muscle-row"><span class="mtag primary">Rectus Femoris</span><span class="mtag primary">Vastus Lateralis</span><span class="mtag primary">VMO</span><span class="mtag primary">Vastus Intermedius</span></div>
+      <div class="rest-btn" onclick="startTimer(event,'Rest — Leg Extension',120,'Next: Hip Thrust')"><div class="rest-btn-icon">⏱</div><div class="rest-btn-text"><div class="rest-btn-label">Rest Period</div><div class="rest-btn-time">2:00</div></div><div class="rest-btn-arrow">▶</div></div>
+    </div>
+  </div>
+
+  <div class="excard glute-card" onclick="toggle(this)">
+    <div class="excard-header"><div class="ex-num glut">C1</div><div class="ex-main"><div class="ex-name">Hip Thrust (Machine)</div><div class="ex-tags"><span class="ex-tag load">47.7 kg</span><span class="ex-tag sets">4 SETS</span><span class="ex-tag reps">12–15 REPS</span><span class="ex-tag glute">🍑 +1 SET</span></div></div><div class="ex-chevron">⌄</div></div>
+    <div class="excard-body">
+      <div class="rx-grid"><div class="rx-box"><div class="rx-val">47.7kg</div><div class="rx-label">Load</div></div><div class="rx-box"><div class="rx-val">4</div><div class="rx-label">Sets</div></div><div class="rx-box"><div class="rx-val">12–15</div><div class="rx-label">Reps</div></div><div class="rx-box"><div class="rx-val">RPE 9</div><div class="rx-label">Effort</div></div></div>
+      <div class="tempo-box"><div class="tempo-row"><div class="tempo-digit"><div class="tempo-num">2</div><div class="tempo-l">Lower</div></div><div class="tempo-sep">-</div><div class="tempo-digit"><div class="tempo-num">2</div><div class="tempo-l">Squeeze</div></div><div class="tempo-sep">-</div><div class="tempo-digit"><div class="tempo-num">X</div><div class="tempo-l">Drive</div></div><div class="tempo-sep">-</div><div class="tempo-digit"><div class="tempo-num">1</div><div class="tempo-l">Hold</div></div></div></div>
+      <div class="key-cue">Same weight as Tuesday but higher reps — this is the hypertrophy stimulus for your glutes. 2-second squeeze every rep. By rep 14 this should be genuinely hard.</div>
+      <div class="cue-label">Setup</div>
+      <div class="cue-item">Same setup as Tuesday. Shoulders on bench edge. Feet flat under knees. Chin tucked.</div>
+      <div class="cue-item">Hip pad at the hip crease. Not on the stomach or thighs.</div>
+      <div class="cue-label">Execution</div>
+      <div class="cue-item">Drive through heels to full hip extension. 2-second glute squeeze at the top — every rep.</div>
+      <div class="cue-item">Tuck pelvis at the top — no rib flare, no lower back hyperextension.</div>
+      <div class="cue-label">Common Errors</div>
+      <div class="error-item">Pushing through toes instead of heels — shifts load from glutes to quads</div>
+      <div class="error-item">Skipping the 2-second squeeze — the squeeze is where glute activation peaks</div>
+      <div class="error-item">Lower back arching at the top — ribs flaring. Tuck pelvis.</div>
+      <div class="error-item">Head craning backward — chin stays tucked throughout</div>
+      <div class="cue-label">What You Should Feel</div>
+      <div class="feel-box">A powerful burning squeeze directly in your glutes — both cheeks simultaneously. By set 4 your glutes should be significantly more fatigued than after Tuesday's session because of the higher rep count. That's intentional.</div>
+      <div class="cue-label">Muscles Worked</div>
+      <div class="muscle-row"><span class="mtag primary">Gluteus Maximus</span><span class="mtag primary">Gluteus Medius</span><span class="mtag secondary">Hamstrings</span><span class="mtag secondary">Quadriceps</span></div>
+      <div class="rest-btn" onclick="startTimer(event,'Rest — Hip Thrust',120,'Next: Hip Abduction')"><div class="rest-btn-icon">⏱</div><div class="rest-btn-text"><div class="rest-btn-label">Rest Period</div><div class="rest-btn-time">2:00</div></div><div class="rest-btn-arrow">▶</div></div>
+    </div>
+  </div>
+
+  <div class="excard glute-card" onclick="toggle(this)">
+    <div class="excard-header"><div class="ex-num glut">D1</div><div class="ex-main"><div class="ex-name">Hip Abduction (Machine)</div><div class="ex-tags"><span class="ex-tag load">50 kg</span><span class="ex-tag sets">3 SETS</span><span class="ex-tag reps">15–20 REPS</span><span class="ex-tag glute">🍑 GLUTE MED · NEW</span></div></div><div class="ex-chevron">⌄</div></div>
+    <div class="excard-body">
+      <div class="rx-grid"><div class="rx-box"><div class="rx-val">50kg</div><div class="rx-label">Load</div></div><div class="rx-box"><div class="rx-val">3</div><div class="rx-label">Sets</div></div><div class="rx-box"><div class="rx-val">15–20</div><div class="rx-label">Reps</div></div><div class="rx-box"><div class="rx-val">RPE 8</div><div class="rx-label">Effort</div></div></div>
+      <div class="tempo-box"><div class="tempo-row"><div class="tempo-digit"><div class="tempo-num">2</div><div class="tempo-l">Close</div></div><div class="tempo-sep">-</div><div class="tempo-digit"><div class="tempo-num">2</div><div class="tempo-l">Hold</div></div><div class="tempo-sep">-</div><div class="tempo-digit"><div class="tempo-num">X</div><div class="tempo-l">Open</div></div><div class="tempo-sep">-</div><div class="tempo-digit"><div class="tempo-num">1</div><div class="tempo-l">Squeeze</div></div></div></div>
+      <div class="key-cue">Push legs OUTWARD against resistance. 2-second squeeze at maximum abduction. Controlled return — don't let weight snap legs back. Gluteus medius gives glutes their shape from the side.</div>
+      <div class="cue-label">Setup</div>
+      <div class="cue-item">Sit upright, back against pad. Outer thigh (not knee) contacts the pads.</div>
+      <div class="cue-item">Starting position: legs together or slightly open — not forced wide to begin.</div>
+      <div class="cue-label">Execution</div>
+      <div class="cue-item">Push legs outward against the pads in a controlled arc.</div>
+      <div class="cue-item">Hold 2 seconds at maximum comfortable opening — squeeze the outer glute hard.</div>
+      <div class="cue-item">Return slowly over 2 seconds. Resist the weight coming back in.</div>
+      <div class="cue-label">Common Errors</div>
+      <div class="error-item">Letting weight snap legs back in — the controlled return is half the exercise</div>
+      <div class="error-item">Opening too wide — stay within comfortable range, don't force extreme ROM</div>
+      <div class="error-item">Leaning forward or sideways — sit tall and upright throughout</div>
+      <div class="error-item">Using hip flexors to swing outward instead of abductors squeezing — slow it down</div>
+      <div class="cue-label">What You Should Feel</div>
+      <div class="feel-box">A burn on the outer hip — above the hip bone and to the side. This is the gluteus medius. It's the most neglected glute muscle. The shape and roundness of the glute from the side comes largely from developing this muscle.</div>
+      <div class="cue-label">Muscles Worked</div>
+      <div class="muscle-row"><span class="mtag primary">Gluteus Medius</span><span class="mtag primary">Gluteus Minimus</span><span class="mtag secondary">TFL</span><span class="mtag secondary">Hip Abductors</span></div>
+      <div class="rest-btn" onclick="startTimer(event,'Rest — Hip Abduction',90,'Next: Seated Leg Curl')"><div class="rest-btn-icon">⏱</div><div class="rest-btn-text"><div class="rest-btn-label">Rest Period</div><div class="rest-btn-time">1:30</div></div><div class="rest-btn-arrow">▶</div></div>
+    </div>
+  </div>
+
+  <div class="excard" onclick="toggle(this)">
+    <div class="excard-header"><div class="ex-num hype">E1</div><div class="ex-main"><div class="ex-name">Seated Leg Curl (Machine)</div><div class="ex-tags"><span class="ex-tag load">50 kg</span><span class="ex-tag sets">3 SETS</span><span class="ex-tag reps">12–15 REPS</span></div></div><div class="ex-chevron">⌄</div></div>
+    <div class="excard-body">
+      <div class="rx-grid"><div class="rx-box"><div class="rx-val">50kg</div><div class="rx-label">Load</div></div><div class="rx-box"><div class="rx-val">3</div><div class="rx-label">Sets</div></div><div class="rx-box"><div class="rx-val">12–15</div><div class="rx-label">Reps</div></div><div class="rx-box"><div class="rx-val">RPE 8</div><div class="rx-label">Effort</div></div></div>
+      <div class="tempo-box"><div class="tempo-row"><div class="tempo-digit"><div class="tempo-num">3</div><div class="tempo-l">Return</div></div><div class="tempo-sep">-</div><div class="tempo-digit"><div class="tempo-num">1</div><div class="tempo-l">Stretch</div></div><div class="tempo-sep">-</div><div class="tempo-digit"><div class="tempo-num">X</div><div class="tempo-l">Curl</div></div><div class="tempo-sep">-</div><div class="tempo-digit"><div class="tempo-num">1</div><div class="tempo-l">Hold</div></div></div></div>
+      <div class="key-cue">Same weight as Tuesday but higher reps. Full extension at the top — every rep. 3-second return. Hamstrings trained at long length here is the most effective position for growth.</div>
+      <div class="cue-label">Setup</div>
+      <div class="cue-item">Same setup as Tuesday. Sit fully back. Thigh pad just above knees. Legs fully extended at start.</div>
+      <div class="cue-label">Execution</div>
+      <div class="cue-item">Full leg extension at the top — feel the hamstring stretch at the start of every rep.</div>
+      <div class="cue-item">Curl heels toward your seat. 1-second hold at peak contraction.</div>
+      <div class="cue-item">Return over 3 full seconds to complete extension. Do not let weight crash down.</div>
+      <div class="cue-label">Common Errors</div>
+      <div class="error-item">Cutting the range at the top — full leg extension is the key stimulus. Don't skip it.</div>
+      <div class="error-item">Hips rising off the seat — thigh pad needs to be tighter or weight reduced</div>
+      <div class="error-item">Rushing the return — 3-second lowering is where most growth stimulus occurs</div>
+      <div class="error-item">Feet turned excessively — keep neutral ankle position throughout</div>
+      <div class="cue-label">What You Should Feel</div>
+      <div class="feel-box">A stretch across the back of your thigh when legs are fully extended. A hard squeeze at the back of the knee at full contraction. Higher reps than Tuesday — your hamstrings should feel thoroughly worked by the end of set 3.</div>
+      <div class="cue-label">Muscles Worked</div>
+      <div class="muscle-row"><span class="mtag primary">Hamstrings (all 3)</span><span class="mtag secondary">Gastrocnemius</span></div>
+      <div class="rest-btn" onclick="startTimer(event,'Rest — Leg Curl',90,'Next: Calf Press')"><div class="rest-btn-icon">⏱</div><div class="rest-btn-text"><div class="rest-btn-label">Rest Period</div><div class="rest-btn-time">1:30</div></div><div class="rest-btn-arrow">▶</div></div>
+    </div>
+  </div>
+
+  <div class="excard" onclick="toggle(this)">
+    <div class="excard-header"><div class="ex-num hype">F1</div><div class="ex-main"><div class="ex-name">Calf Press (Machine)</div><div class="ex-tags"><span class="ex-tag load">117 kg</span><span class="ex-tag sets">4 SETS</span><span class="ex-tag reps">15–20 REPS</span></div></div><div class="ex-chevron">⌄</div></div>
+    <div class="excard-body">
+      <div class="rx-grid"><div class="rx-box"><div class="rx-val">117kg</div><div class="rx-label">Load</div></div><div class="rx-box"><div class="rx-val">4</div><div class="rx-label">Sets</div></div><div class="rx-box"><div class="rx-val">15–20</div><div class="rx-label">Reps</div></div><div class="rx-box"><div class="rx-val">RPE 9</div><div class="rx-label">Effort</div></div></div>
+      <div class="tempo-box"><div class="tempo-row"><div class="tempo-digit"><div class="tempo-num">3</div><div class="tempo-l">Lower</div></div><div class="tempo-sep">-</div><div class="tempo-digit"><div class="tempo-num">2</div><div class="tempo-l">Stretch</div></div><div class="tempo-sep">-</div><div class="tempo-digit"><div class="tempo-num">X</div><div class="tempo-l">Press</div></div><div class="tempo-sep">-</div><div class="tempo-digit"><div class="tempo-num">2</div><div class="tempo-l">Hold</div></div></div></div>
+      <div class="key-cue">2-second PAUSE at the bottom (full stretch) kills the bounce reflex. Your data shows inconsistent reps — standardise: 3×15 with full ROM and 2-sec pauses before touching the weight.</div>
+      <div class="cue-label">Setup</div>
+      <div class="cue-item">Only the balls of your feet and toes on the platform edge. Heels hanging freely.</div>
+      <div class="cue-item">Legs fully extended (knees locked straight) — this is calf isolation, knees must be straight.</div>
+      <div class="cue-label">Execution</div>
+      <div class="cue-item">Lower heels as far below the platform as possible over 3 seconds. Full dorsiflexion.</div>
+      <div class="cue-item">2-second pause at the bottom — dead stop. No bounce. Ever.</div>
+      <div class="cue-item">Push through balls of feet to maximum plantar flexion. 2-second hold at the top.</div>
+      <div class="cue-label">Common Errors</div>
+      <div class="error-item">Bouncing at the bottom — removes all stretch stimulus. The 2-sec pause kills this.</div>
+      <div class="error-item">Partial range of motion — calves adapt fast to short ROM. Full stretch every rep.</div>
+      <div class="error-item">Bending the knees — shifts from gastrocnemius to soleus. Keep legs straight.</div>
+      <div class="error-item">Inconsistent reps across sets — standardise 15 reps with full ROM before adding weight</div>
+      <div class="cue-label">What You Should Feel</div>
+      <div class="feel-box">A deep stretch in the calf muscle belly at the bottom — it should feel like a significant pull. A hard contraction and possible cramping at the top if you're doing it right. If you're not feeling much, you're bouncing or cutting the ROM short.</div>
+      <div class="cue-label">Muscles Worked</div>
+      <div class="muscle-row"><span class="mtag primary">Gastrocnemius (Lateral)</span><span class="mtag primary">Gastrocnemius (Medial)</span><span class="mtag secondary">Soleus</span><span class="mtag secondary">Tibialis Posterior</span></div>
+      <div class="rest-btn" onclick="startTimer(event,'Rest — Calf Press',60,'Next: Plank (Abs)')"><div class="rest-btn-icon">⏱</div><div class="rest-btn-text"><div class="rest-btn-label">Rest Period</div><div class="rest-btn-time">1:00</div></div><div class="rest-btn-arrow">▶</div></div>
+    </div>
+  </div>
+
+  <div class="phase-head"><div class="phase-icon">💪</div><div style="flex:1"><div class="phase-label">Ab Finisher</div><div class="phase-sub">Friday — different to Wednesday</div></div><div class="phase-info">~8 MIN</div></div>
+
+  <div class="excard abs-card" onclick="toggle(this)">
+    <div class="excard-header"><div class="ex-num ab">G1</div><div class="ex-main"><div class="ex-name">Plank (Weighted when ready)</div><div class="ex-tags"><span class="ex-tag load">BW</span><span class="ex-tag sets">3 SETS</span><span class="ex-tag reps">30–60 sec</span><span class="ex-tag abs">ABS</span></div></div><div class="ex-chevron">⌄</div></div>
+    <div class="excard-body">
+      <div class="rx-grid"><div class="rx-box"><div class="rx-val">BW</div><div class="rx-label">Load</div></div><div class="rx-box"><div class="rx-val">3</div><div class="rx-label">Sets</div></div><div class="rx-box"><div class="rx-val">30–60s</div><div class="rx-label">Hold</div></div><div class="rx-box"><div class="rx-val">RPE 8</div><div class="rx-label">Effort</div></div></div>
+      <div class="key-cue">Hips level — not sagging, not piked. Squeeze your glutes AND your abs simultaneously. Breathe steadily. When 60 seconds is easy, add a weight plate on your back.</div>
+      <div class="cue-label">Setup</div>
+      <div class="cue-item">Forearms on the floor, elbows under shoulders. Toes on the floor.</div>
+      <div class="cue-item">Body forms a straight line from head to heel — no sag, no pike.</div>
+      <div class="cue-label">Execution</div>
+      <div class="cue-item">Squeeze glutes and brace abs simultaneously — both at once.</div>
+      <div class="cue-item">Breathe steadily — don't hold your breath. Breath-holding spikes blood pressure.</div>
+      <div class="cue-item">Progression: 30 sec → 45 sec → 60 sec → add plate on back.</div>
+      <div class="cue-label">Common Errors</div>
+      <div class="error-item">Hips sagging toward the floor — squeeze glutes and brace abs hard to fix this</div>
+      <div class="error-item">Hips piking upward — body should form a straight line, not a triangle</div>
+      <div class="error-item">Holding breath — breathe steadily throughout. Counterproductive to hold breath.</div>
+      <div class="error-item">Head dropping or craning — keep neutral neck, eyes toward the floor</div>
+      <div class="cue-label">What You Should Feel</div>
+      <div class="feel-box">A deep contraction across your entire core — transverse abdominis to rectus abdominis. Also feel your glutes working. If you mainly feel your lower back, your hips are sagging — brace harder.</div>
+      <div class="cue-label">Muscles Worked</div>
+      <div class="muscle-row"><span class="mtag primary">Transverse Abdominis</span><span class="mtag primary">Rectus Abdominis</span><span class="mtag secondary">Obliques</span><span class="mtag secondary">Gluteus Maximus</span></div>
+      <div class="rest-btn" onclick="startTimer(event,'Rest — Plank',60,'Next: Machine Crunch')"><div class="rest-btn-icon">⏱</div><div class="rest-btn-text"><div class="rest-btn-label">Rest Period</div><div class="rest-btn-time">1:00</div></div><div class="rest-btn-arrow">▶</div></div>
+    </div>
+  </div>
+
+  <div class="excard abs-card" onclick="toggle(this)">
+    <div class="excard-header"><div class="ex-num ab">H1</div><div class="ex-main"><div class="ex-name">Machine Crunch / Ab Crunch Machine</div><div class="ex-tags"><span class="ex-tag load">~15 kg</span><span class="ex-tag sets">3 SETS</span><span class="ex-tag reps">15–20 REPS</span><span class="ex-tag abs">ABS</span></div></div><div class="ex-chevron">⌄</div></div>
+    <div class="excard-body">
+      <div class="rx-grid"><div class="rx-box"><div class="rx-val">~15kg</div><div class="rx-label">Load</div></div><div class="rx-box"><div class="rx-val">3</div><div class="rx-label">Sets</div></div><div class="rx-box"><div class="rx-val">15–20</div><div class="rx-label">Reps</div></div><div class="rx-box"><div class="rx-val">RPE 8</div><div class="rx-label">Effort</div></div></div>
+      <div class="key-cue">Curl the RIBCAGE toward the PELVIS — spinal flexion only. Full exhale at the bottom. Slow and controlled — crunches done fast build nothing.</div>
+      <div class="cue-label">Setup</div>
+      <div class="cue-item">Sit in the machine. Arms hold the pad or handles. Feet flat on the footrest.</div>
+      <div class="cue-item">Start position: torso upright. This is full range of motion each rep.</div>
+      <div class="cue-label">Execution</div>
+      <div class="cue-item">Curl ribcage toward your knees — spine flexion only. Hips stay completely still.</div>
+      <div class="cue-item">Exhale fully at the bottom — maximum ab contraction happens at full exhale.</div>
+      <div class="cue-item">Return slowly to upright. Don't let weight pull you back — control the return.</div>
+      <div class="cue-label">Common Errors</div>
+      <div class="error-item">Hip flexing instead of spine flexing — hips stay still, only the spine moves</div>
+      <div class="error-item">Not exhaling at the bottom — the exhale is what creates peak ab contraction</div>
+      <div class="error-item">Going too fast — if you can rush it, weight is too light or form is wrong</div>
+      <div class="error-item">Pulling with arms/neck — the crunch is abdominal, arms just hold the pad</div>
+      <div class="cue-label">What You Should Feel</div>
+      <div class="feel-box">A strong contraction across your entire abdominal wall at the bottom of each rep. A stretch as you return to upright. Progress the weight weekly — treat it like any other exercise. By rep 18–20 this should be genuinely burning.</div>
+      <div class="cue-label">Muscles Worked</div>
+      <div class="muscle-row"><span class="mtag primary">Rectus Abdominis</span><span class="mtag secondary">Obliques</span><span class="mtag secondary">Transverse Abdominis</span></div>
+      <div class="rest-btn" onclick="startTimer(event,'Rest — Machine Crunch',60,'Next: Hip Adduction — final exercise!')"><div class="rest-btn-icon">⏱</div><div class="rest-btn-text"><div class="rest-btn-label">Rest Period</div><div class="rest-btn-time">1:00</div></div><div class="rest-btn-arrow">▶</div></div>
+    </div>
+  </div>
+
+  <div class="excard" onclick="toggle(this)">
+    <div class="excard-header"><div class="ex-num hype">I1</div><div class="ex-main"><div class="ex-name">Hip Adduction (Machine)</div><div class="ex-tags"><span class="ex-tag load">63 kg</span><span class="ex-tag sets">2 SETS</span><span class="ex-tag reps">12–15 REPS</span></div></div><div class="ex-chevron">⌄</div></div>
+    <div class="excard-body">
+      <div class="rx-grid"><div class="rx-box"><div class="rx-val">63kg</div><div class="rx-label">Load</div></div><div class="rx-box"><div class="rx-val">2</div><div class="rx-label">Sets</div></div><div class="rx-box"><div class="rx-val">12–15</div><div class="rx-label">Reps</div></div><div class="rx-box"><div class="rx-val">RPE 8</div><div class="rx-label">Effort</div></div></div>
+      <div class="tempo-box"><div class="tempo-row"><div class="tempo-digit"><div class="tempo-num">2</div><div class="tempo-l">Open</div></div><div class="tempo-sep">-</div><div class="tempo-digit"><div class="tempo-num">1</div><div class="tempo-l">Stretch</div></div><div class="tempo-sep">-</div><div class="tempo-digit"><div class="tempo-num">X</div><div class="tempo-l">Close</div></div><div class="tempo-sep">-</div><div class="tempo-digit"><div class="tempo-num">1</div><div class="tempo-l">Squeeze</div></div></div></div>
+      <div class="key-cue">Squeeze inner thighs together against the pads. 1-second squeeze at close. Resist the opening — don't let weight snap legs apart. Inner thigh strength supports squat stability.</div>
+      <div class="cue-label">Setup</div>
+      <div class="cue-item">Sit fully upright, back against pad. Inner thigh (not knee) contacts the pads.</div>
+      <div class="cue-item">Starting width: open to a comfortable stretch — not forced or painful.</div>
+      <div class="cue-label">Execution</div>
+      <div class="cue-item">Squeeze thighs together in a controlled arc — think "cracking a walnut between your knees."</div>
+      <div class="cue-item">1-second squeeze when pads are closed. Resist the opening over 2 seconds.</div>
+      <div class="cue-label">Common Errors</div>
+      <div class="error-item">Opening too wide at the start — adductors at excessive stretch can strain</div>
+      <div class="error-item">Letting weight snap legs open — the eccentric return is just as important</div>
+      <div class="error-item">Using hip flexors to swing rather than adductors to squeeze — slow right down</div>
+      <div class="error-item">Leaning forward or backward — stay upright and tall throughout the set</div>
+      <div class="cue-label">What You Should Feel</div>
+      <div class="feel-box">A burn along your inner thigh — from mid-thigh toward your groin. After hip abduction work, this completes the hip musculature. Inner thigh strength directly supports squat depth and knee stability.</div>
+      <div class="cue-label">Muscles Worked</div>
+      <div class="muscle-row"><span class="mtag primary">Adductor Magnus</span><span class="mtag primary">Adductor Longus</span><span class="mtag secondary">Adductor Brevis</span><span class="mtag secondary">Gracilis</span></div>
+      <div class="rest-btn" onclick="startTimer(event,'Rest — Hip Adduction',75,'Friday complete! Great work this week.')"><div class="rest-btn-icon">⏱</div><div class="rest-btn-text"><div class="rest-btn-label">Rest Period</div><div class="rest-btn-time">1:15</div></div><div class="rest-btn-arrow">▶</div></div>
+    </div>
+  </div>
+</div>
+
+<script>
+function showPanel(day,tab){document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));document.getElementById('panel-'+day).classList.add('active');tab.classList.add('active');window.scrollTo({top:0,behavior:'smooth'});}
+function toggle(card){const isOpen=card.classList.contains('open');const panel=card.closest('.panel');panel.querySelectorAll('.excard.open').forEach(c=>{if(c!==card)c.classList.remove('open');});card.classList.toggle('open',!isOpen);if(!isOpen)setTimeout(()=>card.scrollIntoView({behavior:'smooth',block:'nearest'}),50);}
+let iv=null,rem=0,tot=0,paused=false;
+function startTimer(e,name,secs,sub){e.stopPropagation();rem=secs;tot=secs;paused=false;document.getElementById('toName').textContent=name;document.getElementById('toSub').textContent=sub;const d=document.getElementById('toDisplay');d.className='to-display';document.getElementById('toPauseBtn').textContent='⏸ Pause';document.getElementById('toPauseBtn').className='to-btn pause';document.getElementById('timerOverlay').classList.add('active');render();if(iv)clearInterval(iv);iv=setInterval(()=>{if(!paused){rem--;render();if(rem<=0){clearInterval(iv);d.className='to-display done';d.textContent='GO!';document.getElementById('toSub').textContent='Rest complete — next set!';if(navigator.vibrate)navigator.vibrate([300,100,300]);}}},1000);}
+function render(){const m=Math.floor(rem/60),s=rem%60;const txt=rem>=60?`${m}:${s.toString().padStart(2,'0')}`:rem.toString().padStart(2,'0');const d=document.getElementById('toDisplay');if(rem>0){d.textContent=txt;d.className=rem<=10?'to-display urgent':'to-display';}const pct=(rem/tot)*100;const fill=document.getElementById('toFill');fill.style.width=pct+'%';fill.style.background=rem<=10?'#e03535':rem>tot*0.5?'#f59e0b':'#22c55e';}
+function pauseTimer(){paused=!paused;const btn=document.getElementById('toPauseBtn');btn.textContent=paused?'▶ Resume':'⏸ Pause';btn.className=paused?'to-btn pause paused':'to-btn pause';}
+function stopTimer(){clearInterval(iv);iv=null;document.getElementById('timerOverlay').classList.remove('active');}
+</script>
+
+</body>
+</html>
